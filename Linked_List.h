@@ -53,9 +53,10 @@ public:
 	LinkedList(LinkedList&  List, unsigned int uiCapacity = 0);
 	~LinkedList();
 	unsigned int GetCount(void);
-	E_LIST_ERROR_TYPE AddFirst (ListNode<T> NewHead);
-	E_LIST_ERROR_TYPE AddFirst (T NewHeadVal);
-	E_LIST_ERROR_TYPE AddLast (ListNode<T> NewLast);
+	E_LIST_ERROR_TYPE AddFirst (ListNode<T>& NewHead); // Changed to reference as duplicate node creation
+
+	E_LIST_ERROR_TYPE AddFirst (T NewHeadVal); 
+	E_LIST_ERROR_TYPE AddLast (ListNode<T>& NewLast); // Changed to reference as duplicate node creation
 	E_LIST_ERROR_TYPE AddLast (T NewLastVal);
 	E_LIST_ERROR_TYPE AddAfter(ListNode<T> NewNode, ListNode<T> BaseNode);
 	E_LIST_ERROR_TYPE AddAfter(T NodeVal, ListNode<T> BaseNode);
