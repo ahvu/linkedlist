@@ -20,19 +20,23 @@ typedef enum _E_LIST_ERROR_TYPE
 	eLIST_MAX_ERR
 }E_LIST_ERROR_TYPE;
 
+template <class T> class ListNode;
+template <class T> class LinkedList;
+
 template <class T>
 class ListNode
 {
 protected:
 	T m_Val;
-	ListNode<T> *m_p_NextNode;
+	ListNode<T> *m_pNextNode;
 public:
 	ListNode();
 	ListNode(T val);
 	ListNode(ListNode<T> &node);
 	~ListNode();
-	T Get_Val(void);
-	void Set_Val(T new_val);
+	T GetVal(void);
+	void SetVal(T NewVal);
+	friend class LinkedList<T>;
 };
 
 template <class T>
@@ -41,30 +45,32 @@ class LinkedList
 protected:
 	unsigned int m_uiNodeCount;
 	unsigned int m_uiCapacity;
-	ListNode<T> *m_p_First;
-	ListNode<T> *m_p_Last ;
+	ListNode<T> *m_pFirst;
+	ListNode<T> *m_pLast ;
 public:
-	LinkedList(unsigned int Capacity = 0);
-	LinkedList(ListNode<T> *_head, unsigned int Capacity = 0);
-	LinkedList(LinkedList&  _list, unsigned int Capacity = 0);
+	LinkedList(unsigned int uiCapacity = 0);
+	LinkedList(ListNode<T> *Head, unsigned int uiCapacity = 0);
+	LinkedList(LinkedList&  List, unsigned int uiCapacity = 0);
 	~LinkedList();
-	E_LIST_ERROR_TYPE Add_First (ListNode<T> new_head);
-	E_LIST_ERROR_TYPE Add_First (T new_head_val);
-	E_LIST_ERROR_TYPE Add_Last (ListNode<T> new_last);
-	E_LIST_ERROR_TYPE Add_Last (T new_last_val);
-	E_LIST_ERROR_TYPE Add_After(ListNode<T> new_node, ListNode<T> base_node);
-	E_LIST_ERROR_TYPE Add_After(T node_val, ListNode<T> base_node);
-	E_LIST_ERROR_TYPE Add_Before(ListNode<T> new_node, ListNode<T> base_node);
-	E_LIST_ERROR_TYPE Add_Before(T node_val, ListNode<T> base_node);
-	ListNode<T>& Find(T val);
-	ListNode<T>& Find_Last(T val);
-	E_LIST_ERROR_TYPE Get_Index(T val, unsigned int *idx_val);
-	E_LIST_ERROR_TYPE Get_Index(ListNode<T> Node, unsigned int *idx_val);
+	unsigned int GetCount(void);
+	E_LIST_ERROR_TYPE AddFirst (ListNode<T> NewHead);
+	E_LIST_ERROR_TYPE AddFirst (T NewHeadVal);
+	E_LIST_ERROR_TYPE AddLast (ListNode<T> NewLast);
+	E_LIST_ERROR_TYPE AddLast (T NewLastVal);
+	E_LIST_ERROR_TYPE AddAfter(ListNode<T> NewNode, ListNode<T> BaseNode);
+	E_LIST_ERROR_TYPE AddAfter(T NodeVal, ListNode<T> BaseNode);
+	E_LIST_ERROR_TYPE AddBefore(ListNode<T> NewNode, ListNode<T> BaseNode);
+	E_LIST_ERROR_TYPE AddBefore(T NodeVal, ListNode<T> BaseNode);
+	ListNode<T>& Find(T Val);
+	ListNode<T>& FindLast(T Val);
+	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int *puiIdxRet);
+	E_LIST_ERROR_TYPE GetIndex(ListNode<T> Node, unsigned int *puiIdxRet);
 	E_LIST_ERROR_TYPE Remove (T val);
 	E_LIST_ERROR_TYPE Remove (ListNode<T> Node);
-	E_LIST_ERROR_TYPE Remove_First(void);
-	E_LIST_ERROR_TYPE Remove_Last(void);
-	E_LIST_ERROR_TYPE Remove_By_Idx (unsigned int index);
+	E_LIST_ERROR_TYPE RemoveFirst(void);
+	E_LIST_ERROR_TYPE RemoveLast(void);
+	E_LIST_ERROR_TYPE RemoveByIdx (unsigned int uiIndex);
 	E_LIST_ERROR_TYPE Clear(void);
 };
+
 #endif /* LINKED_LIST_H_ */
