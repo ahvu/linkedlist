@@ -8,5 +8,40 @@
 #include <iostream>
 #include "Linked_List.h"
 
+int main()
+{
+	ListNode<unsigned int> *n1 = new ListNode<unsigned int>(1);
+	ListNode<unsigned int> *n2 = new ListNode<unsigned int>(2);
+	ListNode<unsigned int> *n3 = new ListNode<unsigned int>(3);
+	ListNode<unsigned int> *n4 = new ListNode<unsigned int>(4);
 
+	LinkedList<unsigned int> a(10);
+	a.AddLast(*n1);
+	a.AddLast(*n2);
+	a.AddLast(99);
+	a.AddFirst(*n4);
+	a.AddFirst(*n3);
+	a.AddFirst(100);
+
+	a.TraverseList();
+	a.FindLast(1);
+
+	std::cout << "Add 1 before idx 3" << std::endl;
+	a.AddBefore(*n1, a.GetNode(3));
+	a.TraverseList();
+	a.FindLast(1);
+
+	LinkedList<unsigned int> *b = new LinkedList<unsigned int>(a, 20);
+	b->TraverseList();
+	//delete a;
+	delete b;
+
+	getchar();
+
+	delete n1;
+	delete n2;
+	delete n3;
+	delete n4;
+	return 0;
+}
 
