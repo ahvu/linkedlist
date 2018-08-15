@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "Linked_List.h"
+#include "dbg.h"
 
 int main()
 {
@@ -24,10 +25,11 @@ int main()
 	a.AddFirst(100);
 
 	a.TraverseList();
-	a.FindLast(1);
+	a.RemoveByIdx(0);
 
-	std::cout << "Add 1 before idx 3" << std::endl;
-	a.AddBefore(*n1, a.GetNode(3));
+	a.TraverseList();
+
+	a.AddFirst(1);
 	a.TraverseList();
 	a.FindLast(1);
 
