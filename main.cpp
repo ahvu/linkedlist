@@ -25,20 +25,22 @@ int main()
 	a.AddFirst(100);
 
 	a.TraverseList();
-	a.RemoveByIdx(0);
-
+	a.RemoveByIdx(1);
+	a.RemoveByIdx(1);
+	a.RemoveByIdx(1);
+	a.RemoveByIdx(1);
+	a.RemoveByIdx(1);
+	a.RemoveByIdx(1);
+	a.RemoveByIdx(1);
+	a.RemoveByIdx(1);
 	a.TraverseList();
-
-	a.AddFirst(1);
-	a.TraverseList();
-	a.FindLast(1);
 
 	LinkedList<unsigned int> *b = new LinkedList<unsigned int>(a, 20);
 	b->TraverseList();
 	//delete a;
 	delete b;
 
-	//getchar();
+	getchar();
 
 	delete n1;
 	delete n2;

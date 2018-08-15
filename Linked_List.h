@@ -64,7 +64,7 @@ public:
 	E_LIST_ERROR_TYPE AddBefore(T NodeVal, ListNode<T>& BaseNode);
 	ListNode<T>* Find(T Val);
 	ListNode<T>* FindLast(T Val);
-	ListNode<T>* GetNodeByIdx(unsigned int idx);
+	ListNode<T>* GetNodeByIdx(unsigned int uiIdx);
 	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int *puiIdxRet);
 	E_LIST_ERROR_TYPE GetIndex(ListNode<T>& Node, unsigned int *puiIdxRet);
 	E_LIST_ERROR_TYPE Remove (T val);
