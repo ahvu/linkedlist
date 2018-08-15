@@ -261,6 +261,74 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddBefore(ListNode<T>& NewNode, ListNode<T>& Ba
 	return err;
 }
 
+/*
+ * @brief: Add one node after a given node in linked list.
+ * @return: E_LIST_ERROR_TYPE
+ */
+template<class T>
+E_LIST_ERROR_TYPE LinkedList<T>::AddAfter(ListNode<T>& NewNode, ListNode<T>* BaseNode)
+{
+	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	if(0 == m_uiNodeCount)
+	{
+		eErr = eLIST_EMPTY_LIST;
+	}
+	else if (&NewNode == NULL_PTR)
+	{
+		eErr = eLIST_INVALID_NODE;
+	}
+	else if((UNLIMITTED_LIST_SIZE == m_uiCapacity)||(m_uiNodeCount < m_uiCapacity))
+	{
+		ListNode<T>* pTempNode = m_pFirst;
+		while(pTempNode != NULL_PTR)
+		{
+			if (pTempNode == BaseNode)
+			{
+				break;
+			}
+			pTempNode = pTempNode->m_pNextNode;
+		}
+		if (NULL_PTR == pTempNode)
+		{
+			eErr = eLIST_NODE_NOT_FOUND;
+		}
+		else
+		{
+			ListNode<T> *pNewNode = new ListNode<T>(NewNode);
+			if (pTempNode == m_pLast)
+			{
+				m_pLast->m_pNextNode = pNewNode;
+				m_pLast = pNewNode;
+			}
+			else
+			{
+				pNewNode->m_pNextNode = pTempNode->m_pNextNode;
+				pTempNode->m_pNextNode = pNewNode;
+			}
+			++m_uiNodeCount;
+			std::cout << "Added new node [value][address] = [" << pNewNode->m_Val <<"][" << pNewNode << "]"\
+								<<"after node value: "<<pTempNode->m_Val<< std::endl;
+		}
+	}
+	else
+	{
+		std::cout<<"Over capacity for list !! \n";
+		eErr = eLIST_OVER_CAPACITY;
+	}
+	return eErr;
+}
+
+/*
+ * @brief: Add one node after a given node value in linked list.
+ * @return: E_LIST_ERROR_TYPE
+ */
+template<class T>
+E_LIST_ERROR_TYPE LinkedList<T>::AddAfter(T NodeVal, ListNode<T>* BaseNode)
+{
+	ListNode<T> node(NodeVal);
+	return AddAfter(node, BaseNode);
+}
+
 template<class T>
 E_LIST_ERROR_TYPE LinkedList<T>::AddBetween(ListNode<T>& Left, ListNode<T>& Right, ListNode<T>& NewNode)
 {
@@ -282,7 +350,6 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddBetween(ListNode<T>& Left, ListNode<T>& Righ
 template<class T>
 E_LIST_ERROR_TYPE LinkedList<T>::AddLast (ListNode<T>& NewLast)
 {
-	//std::cout << __FUNCTION__ << std::endl;
 	E_LIST_ERROR_TYPE err = eLIST_NO_ERR;
 	if(m_uiCapacity <= m_uiNodeCount)
 	{
@@ -354,7 +421,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::TraverseList()
 	int idx = 0;
 	while (pNode != NULL_PTR)
 	{
-		
+
 		std::cout << "|" << idx++ << "	|" << pNode->m_Val << "	|" << pNode << std::endl;
 		pNode = pNode->m_pNextNode;
 	}
@@ -393,7 +460,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::Remove(T val)
 				break;
 			}
 			pCurrent = pNext;
-			pNext = pCurrent->m_pNextNode;
+			pNext = pNext->m_pNextNode;
 		}
 	}
 
