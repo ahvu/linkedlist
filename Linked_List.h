@@ -50,8 +50,8 @@ protected:
 	ListNode<T> *m_pLast ;
 public:
 	LinkedList(unsigned int uiCapacity = 0);
-	LinkedList(ListNode<T> *Head, unsigned int uiCapacity = 0);
-	LinkedList(LinkedList&  List, unsigned int uiCapacity = 0);
+	LinkedList(ListNode<T> &Head, unsigned int uiCapacity = 0);
+	LinkedList(LinkedList& List, unsigned int uiCapacity = 0);
 	~LinkedList();
 	unsigned int GetCount(void);
 	E_LIST_ERROR_TYPE AddFirst (ListNode<T>& NewHead); // Changed to reference as duplicate node creation
@@ -62,9 +62,9 @@ public:
 	E_LIST_ERROR_TYPE AddAfter(T NodeVal, ListNode<T>& BaseNode);
 	E_LIST_ERROR_TYPE AddBefore(ListNode<T>& NewNode, ListNode<T>& BaseNode);
 	E_LIST_ERROR_TYPE AddBefore(T NodeVal, ListNode<T>& BaseNode);
-	ListNode<T>& Find(T Val);
-	ListNode<T>& FindLast(T Val);
-	ListNode<T>& GetNode(unsigned int idx);
+	ListNode<T>* Find(T Val);
+	ListNode<T>* FindLast(T Val);
+	ListNode<T>* GetNodeByIdx(unsigned int idx);
 	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int *puiIdxRet);
 	E_LIST_ERROR_TYPE GetIndex(ListNode<T>& Node, unsigned int *puiIdxRet);
 	E_LIST_ERROR_TYPE Remove (T val);
@@ -78,7 +78,7 @@ public:
 private:
 	E_LIST_ERROR_TYPE AddBetween(ListNode<T>& Left, ListNode<T>& Right, ListNode<T>& NewNode);
 };
-
 template class LinkedList<unsigned int>;
 template class ListNode<unsigned int>;
+
 #endif /* LINKED_LIST_H_ */
