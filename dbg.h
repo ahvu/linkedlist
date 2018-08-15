@@ -7,7 +7,7 @@
 #include <string.h>
 
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
-#define NDEBUG
+
 #ifdef NDEBUG
 // compile with all debug messages removed
 #define debug(M, ...)
@@ -37,5 +37,6 @@
 
 // same as check, except that error only gets reported when ndebug flag is not set
 #define check_debug(A, M, ...) if(!(A)) { debug(M, ##__VA_ARGS__); errno=0; goto error; }
+
 
 #endif

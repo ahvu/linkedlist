@@ -223,6 +223,8 @@ ListNode<T>* LinkedList<T>::FindLast(T Val)
 		debug("Found Node@[%x] with value [%d]", pRet, Val);
 		return pRet;
 	}
+	debug("Found Node@[%x] with value [%d]", pRet, Val);
+	return *pRet;
 }
 
 template<class T>
