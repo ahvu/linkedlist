@@ -26,13 +26,6 @@ int main()
 
 	a.TraverseList();
 	a.RemoveByIdx(1);
-	a.RemoveByIdx(1);
-	a.RemoveByIdx(1);
-	a.RemoveByIdx(1);
-	a.RemoveByIdx(1);
-	a.RemoveByIdx(1);
-	a.RemoveByIdx(1);
-	a.RemoveByIdx(1);
 	a.TraverseList();
 
 	LinkedList<unsigned int> *b = new LinkedList<unsigned int>(a, 20);

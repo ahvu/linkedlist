@@ -267,9 +267,14 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddBetween(ListNode<T>& Left, ListNode<T>& Righ
 	E_LIST_ERROR_TYPE err = eLIST_NO_ERR;
 
 	if (Left.m_pNextNode != &Right)
+	{
 		err = eLIST_INVALID_NODE;
+	}
 
-	if (err != eLIST_NO_ERR) return err;
+	if (err != eLIST_NO_ERR)
+	{
+		return err;
+	}
 
 	ListNode<T> *pNewHead = new ListNode<T>(NewNode);
 	Left.m_pNextNode = pNewHead;
@@ -289,7 +294,10 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddLast (ListNode<T>& NewLast)
 		err = eLIST_OVER_CAPACITY;
 	}
 
-	if(err != eLIST_NO_ERR) return err;
+	if (err != eLIST_NO_ERR) 
+	{
+		return err;
+	}
 
 	ListNode<unsigned int> *node = new ListNode<T>(NewLast);
 	if(NULL_PTR == m_pFirst)
@@ -318,7 +326,10 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddLast (T new_LastVal)
 		err = eLIST_OVER_CAPACITY;
 	}
 
-	if (err != eLIST_NO_ERR) return err;
+	if (err != eLIST_NO_ERR)
+	{
+		return err;
+	}
 
 	ListNode<unsigned int> *node = new ListNode<T>(new_LastVal);
 	if (NULL_PTR == m_pFirst)
@@ -345,7 +356,10 @@ E_LIST_ERROR_TYPE LinkedList<T>::TraverseList()
 	if (this->m_pFirst == NULL_PTR)
 		err = eLIST_EMPTY_LIST;
 
-	if (err != eLIST_NO_ERR) return err;
+	if (err != eLIST_NO_ERR)
+	{
+		return err;
+	}
 
 	ListNode<T>* pNode = this->m_pFirst;
 
@@ -369,7 +383,10 @@ E_LIST_ERROR_TYPE LinkedList<T>::Remove(T val)
 	if (this->m_pFirst == NULL_PTR)
 		err = eLIST_EMPTY_LIST;
 
-	if (err != eLIST_NO_ERR) return err;
+	if (err != eLIST_NO_ERR)
+	{
+		return err;
+	}
 
 	ListNode<T>* pCurrent = this->m_pFirst;
 	ListNode<T>* pNext = pCurrent->m_pNextNode;
@@ -417,7 +434,10 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveFirst()
 	if (m_uiNodeCount == 0)
 		err = eLIST_EMPTY_LIST;
 
-	if (err != eLIST_NO_ERR) return err;
+	if (err != eLIST_NO_ERR)
+	{
+		return err;
+	}
 
 	ListNode<T>* pCurrent = m_pFirst;
 	m_pFirst = pCurrent->m_pNextNode;
@@ -438,7 +458,10 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveLast()
 	if (m_uiNodeCount == 0)
 		err = eLIST_EMPTY_LIST;
 
-	if (err != eLIST_NO_ERR) return err;
+	if (err != eLIST_NO_ERR)
+	{
+		return err;
+	}
 	
 	delete m_pLast;
 	m_uiNodeCount--;
@@ -474,10 +497,19 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveByIdx(unsigned int uiIndex)
 {
 	E_LIST_ERROR_TYPE err = eLIST_NO_ERR;
 
-	if (m_uiNodeCount == 0) { err = eLIST_EMPTY_LIST; }
-	if (m_uiNodeCount <= uiIndex) { err = eLIST_INVALID_INDEX; }
+	if (m_uiNodeCount == 0) 
+	{
+		err = eLIST_EMPTY_LIST; 
+	}
+	if (m_uiNodeCount <= uiIndex) 
+	{
+		err = eLIST_INVALID_INDEX; 
+	}
 
-	if (err != eLIST_NO_ERR) { return err; }
+	if (err != eLIST_NO_ERR)
+	{
+		return err;
+	}
 
 	if (0 == uiIndex)
 	{
@@ -510,9 +542,15 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndex(T val, unsigned int *puiIdxRet)
 {
 	E_LIST_ERROR_TYPE err = eLIST_NO_ERR;
 
-	if (m_uiNodeCount == 0) { err = eLIST_EMPTY_LIST; }
+	if (m_uiNodeCount == 0) 
+	{ 
+		err = eLIST_EMPTY_LIST; 
+	}
 
-	if (err != eLIST_NO_ERR) { return err; }
+	if (err != eLIST_NO_ERR) 
+	{
+		return err; 
+	}
 
 	ListNode<T>* pCurrent = this->m_pFirst;
 	bool found = false;
