@@ -38,7 +38,7 @@ int main()
 	//delete a;
 	delete b;
 
-	getchar();
+	//getchar();
 
 	delete n1;
 	delete n2;

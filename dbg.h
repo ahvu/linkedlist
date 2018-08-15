@@ -38,4 +38,5 @@
 // same as check, except that error only gets reported when ndebug flag is not set
 #define check_debug(A, M, ...) if(!(A)) { debug(M, ##__VA_ARGS__); errno=0; goto error; }
 
+
 #endif
