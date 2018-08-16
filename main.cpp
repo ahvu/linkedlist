@@ -32,13 +32,15 @@ int main()
 
 	a.TraverseList();
 
-	LinkedList<unsigned int> idxList(0);
-	a.GetIndex(1, idxList);
-	
-	idxList.TraverseList();
+	LinkedList<unsigned int> idxList1(0);
 
-	//a.RemoveByIdx(1);
-	//a.TraverseList();
+	a.GetIndexList(1, idxList1);
+	idxList1.TraverseList();
+
+	a.RemoveLast();
+
+	LinkedList<unsigned int> *pIdxList1 = a.GetIndexList(1);
+	pIdxList1->TraverseList();
 
 	LinkedList<unsigned int> *b = new LinkedList<unsigned int>(a, 20);
 	b->TraverseList();

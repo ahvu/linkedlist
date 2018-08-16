@@ -68,7 +68,8 @@ public:
 	E_LIST_ERROR_TYPE RemoveByIdx (unsigned int uiIndex);
 	E_LIST_ERROR_TYPE TraverseList();
 	E_LIST_ERROR_TYPE GetValByIdx(T& RetVal,unsigned int uiIdx);
-	E_LIST_ERROR_TYPE GetIndex(T val, LinkedList<unsigned int>& idxList);
+	E_LIST_ERROR_TYPE GetIndexList(T val, LinkedList<unsigned int>& idxList);
+	LinkedList<unsigned int>* GetIndexList(T val);
 	E_LIST_ERROR_TYPE Clear(void);
 
 private:

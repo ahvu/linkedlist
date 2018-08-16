@@ -737,7 +737,7 @@ ListNode<T>* LinkedList<T>::GetNodeByIdx(unsigned int uiIdx)
 }
 
 template <class T>
-E_LIST_ERROR_TYPE LinkedList<T>::GetIndex(T val, LinkedList<unsigned int>& idxList)
+E_LIST_ERROR_TYPE LinkedList<T>::GetIndexList(T val, LinkedList<unsigned int>& idxList)
 {
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
@@ -770,6 +770,14 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndex(T val, LinkedList<unsigned int>& idxLi
 	}
 
 	return eErr;
+}
+
+template <class T>
+LinkedList<unsigned int>* LinkedList<T>::GetIndexList(T val)
+{
+	LinkedList<unsigned int>* pList = new LinkedList<unsigned int>(0);
+	GetIndexList(val, *pList);
+	return pList;
 }
 
 template<class T>
