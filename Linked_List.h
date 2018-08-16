@@ -48,35 +48,40 @@ protected:
 	unsigned int m_uiCapacity;
 	ListNode<T> *m_pFirst;
 	ListNode<T> *m_pLast ;
+	
 public:
 	LinkedList(unsigned int uiCapacity = 0);
 	LinkedList(ListNode<T> &Head, unsigned int uiCapacity = 0);
-	LinkedList(LinkedList& List, unsigned int uiCapacity = 0);
+	LinkedList(const LinkedList<T>& List, unsigned int uiCapacity = 0);
 	~LinkedList();
 	unsigned int GetCount(void);
-	E_LIST_ERROR_TYPE AddFirst (ListNode<T>& NewHead); // Changed to reference as duplicate node creation
 	E_LIST_ERROR_TYPE AddFirst (T NewHeadVal); 
-	E_LIST_ERROR_TYPE AddLast (ListNode<T>& NewLast); // Changed to reference as duplicate node creation
-	E_LIST_ERROR_TYPE AddLast (T NewLastVal);
-	E_LIST_ERROR_TYPE AddAfter(ListNode<T>& NewNode, ListNode<T>* BaseNode);
-	E_LIST_ERROR_TYPE AddAfter(T NodeVal, ListNode<T>* BaseNode);
-	E_LIST_ERROR_TYPE AddBefore(ListNode<T>& NewNode, ListNode<T>& BaseNode);
-	E_LIST_ERROR_TYPE AddBefore(T NodeVal, ListNode<T>& BaseNode);
-	ListNode<T>* Find(T Val);
-	ListNode<T>* FindLast(T Val);
-	ListNode<T>* GetNodeByIdx(unsigned int uiIdx);
+	E_LIST_ERROR_TYPE AddFirst (ListNode<T>& NewHead);
+	E_LIST_ERROR_TYPE Append (T NewLastVal);
+	E_LIST_ERROR_TYPE Append (ListNode<T>& NewLast);
+	E_LIST_ERROR_TYPE Insert (T NodeVal, unsigned int uiIdx);
+	E_LIST_ERROR_TYPE Insert (ListNode<T>& NewNode, unsigned int uiIdx);
 	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int *puiIdxRet);
-	E_LIST_ERROR_TYPE GetIndex(ListNode<T>& Node, unsigned int *puiIdxRet);
 	E_LIST_ERROR_TYPE Remove (T val);
-	E_LIST_ERROR_TYPE Remove (ListNode<T>& Node);
 	E_LIST_ERROR_TYPE RemoveFirst(void);
 	E_LIST_ERROR_TYPE RemoveLast(void);
 	E_LIST_ERROR_TYPE RemoveByIdx (unsigned int uiIndex);
-	E_LIST_ERROR_TYPE Clear(void);
 	E_LIST_ERROR_TYPE TraverseList();
+	E_LIST_ERROR_TYPE GetValByIdx(T& RetVal,unsigned int uiIdx);
+	E_LIST_ERROR_TYPE GetIndex(T val, LinkedList<unsigned int>& idxList);
+	E_LIST_ERROR_TYPE Clear(void);
 
 private:
 	E_LIST_ERROR_TYPE AddBetween(ListNode<T>& Left, ListNode<T>& Right, ListNode<T>& NewNode);
+	E_LIST_ERROR_TYPE AddAfter(ListNode<T>& NewNode, ListNode<T>* BaseNode);
+	E_LIST_ERROR_TYPE AddAfter(T NodeVal, ListNode<T>* BaseNode);
+	E_LIST_ERROR_TYPE Insert(ListNode<T>& NewNode, ListNode<T>& BaseNode);
+	E_LIST_ERROR_TYPE Insert(T NodeVal, ListNode<T>& BaseNode);
+	ListNode<T>* Find(T Val);
+	ListNode<T>* FindLast(T Val);
+	ListNode<T>* GetNodeByIdx(unsigned int uiIdx);
+	E_LIST_ERROR_TYPE GetIndex(ListNode<T>& Node, unsigned int *puiIdxRet);
+	E_LIST_ERROR_TYPE Remove (ListNode<T>& Node);
 };
 template class LinkedList<unsigned int>;
 template class ListNode<unsigned int>;

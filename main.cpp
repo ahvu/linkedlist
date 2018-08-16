@@ -17,28 +17,41 @@ int main()
 	ListNode<unsigned int> *n4 = new ListNode<unsigned int>(4);
 
 	LinkedList<unsigned int> a(10);
-	a.AddLast(*n1);
-	a.AddLast(*n2);
-	a.AddLast(99);
+	a.Append(*n1);
+	a.Append(*n2);
 	a.AddFirst(*n4);
 	a.AddFirst(*n3);
-	a.AddFirst(100);
+
+	a.Append(1);
+	a.Append(1);
+	a.Append(1);
+	a.Append(1);
+	a.Append(1);
+	a.Append(1);
+	a.Append(1);
 
 	a.TraverseList();
-	a.RemoveByIdx(1);
-	a.TraverseList();
+
+	LinkedList<unsigned int> idxList(0);
+	a.GetIndex(1, idxList);
+	
+	idxList.TraverseList();
+
+	//a.RemoveByIdx(1);
+	//a.TraverseList();
 
 	LinkedList<unsigned int> *b = new LinkedList<unsigned int>(a, 20);
 	b->TraverseList();
 	//delete a;
 	delete b;
 
-	getchar();
-
 	delete n1;
 	delete n2;
 	delete n3;
 	delete n4;
+
+	getchar();
+
 	return 0;
 }
 
