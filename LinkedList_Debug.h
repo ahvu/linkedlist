@@ -7,7 +7,7 @@
 #include <string.h>
 
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
-#define LINKED_LIST_DEBUG
+#define xLINKED_LIST_DEBUG
 #ifndef LINKED_LIST_DEBUG
 // compile with all debug messages removed
 #define LIST_DEBUG(M, ...)

@@ -58,9 +58,9 @@ public:
 	unsigned int GetCount(void);
 	E_LIST_ERROR_TYPE AddFirst (T NewHeadVal); 
 	E_LIST_ERROR_TYPE Append (T NewLastVal);
-	E_LIST_ERROR_TYPE Insert (T NodeVal, unsigned int uiIdx);
-	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int *puiIdxRet);
-	E_LIST_ERROR_TYPE Remove (T val);
+	E_LIST_ERROR_TYPE Insert (T NodeVal, unsigned int uiIdx); // ok 
+	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int *puiIdxRet); // ok
+	E_LIST_ERROR_TYPE Remove (T val); 
 	E_LIST_ERROR_TYPE RemoveFirst(void);
 	E_LIST_ERROR_TYPE RemoveLast(void);
 	E_LIST_ERROR_TYPE RemoveByIdx (unsigned int uiIndex);
