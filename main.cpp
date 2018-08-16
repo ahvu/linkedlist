@@ -7,43 +7,133 @@
 
 #include <iostream>
 #include "Linked_List.h"
-#include "dbg.h"
+#include "LinkedList_Debug.h"
 
-int main()
+static void TestAddFirst(void)
 {
-	ListNode<unsigned int> *n1 = new ListNode<unsigned int>(1);
-	ListNode<unsigned int> *n2 = new ListNode<unsigned int>(2);
-	ListNode<unsigned int> *n3 = new ListNode<unsigned int>(3);
-	ListNode<unsigned int> *n4 = new ListNode<unsigned int>(4);
+	//Test for AddFirst function:
+	std::cout<< "Testing AddFirst................................................................... \n";
+	//create new list with unlimited capacity
+	LinkedList<unsigned int> uiList_1;
+	for (unsigned int i = 0; i<10; ++i)
+	{
+		uiList_1.AddFirst(i);
+	}
+	uiList_1.TraverseList();
 
-	LinkedList<unsigned int> a(10);
-	a.AddLast(*n1);
-	a.AddLast(*n2);
-	a.AddLast(99);
-	a.AddFirst(*n4);
-	a.AddFirst(*n3);
-	a.AddFirst(100);
+	//create new list with capacity 5
+	unsigned int uiListSize = 5;
+	LinkedList<unsigned int> uiList_2(uiListSize);
+	for (unsigned int i = 0; i<10; ++i)
+	{
+		uiList_2.AddFirst(i);
+	}
+	uiList_2.TraverseList();
+}
 
-	a.TraverseList();
-	a.RemoveByIdx(0);
+static void TestAppend(void)
+{
+	//Test for Append function:
+	std::cout<< "Testing AddLast................................................................... \n";
+	//create new list with unlimited capacity
+	LinkedList<unsigned int> uiList_1;
+	for (unsigned int i = 0; i<10; ++i)
+	{
+		uiList_1.Append(i);
+	}
+	uiList_1.TraverseList();
 
-	a.TraverseList();
+	//create new list with capacity 5
+	unsigned int uiListSize = 5;
+	LinkedList<unsigned int> uiList_2(uiListSize);
+	for (unsigned int i = 0; i<10; ++i)
+	{
+		uiList_2.Append(i);
+	}
+	uiList_2.TraverseList();
+}
 
-	a.AddFirst(1);
-	a.TraverseList();
-	a.FindLast(1);
+static void TestGetIndex(void)
+{
+	//Test for GetIndex function:
+	std::cout<< "Testing GetIndex.......... \n";
+	LinkedList<unsigned int> iList();
 
-	LinkedList<unsigned int> *b = new LinkedList<unsigned int>(a, 20);
-	b->TraverseList();
-	//delete a;
-	delete b;
+}
 
-	//getchar();
+static void TestGetNodeByIdx(void)
+{
+	//Test for GetNodeByIdx function:
+	std::cout<< "Testing GetNodeByIdx................................ \n";
+	LinkedList<unsigned int> iList;
+	ListNode<unsigned int> *lNode;
+	for (unsigned int i = 0; i<3; ++i)
+	{
+		iList.Append(i);
+	}
+	lNode = iList.GetNodeByIdx(2);
+	std::cout<< lNode->GetVal() << std::endl;
+}
 
-	delete n1;
-	delete n2;
-	delete n3;
-	delete n4;
+static void TestRemove(void)
+{
+	//Test for Remove function
+	std::cout<< "Testing Remove.......... \n";
+}
+
+static void TestRemoveFirst(void)
+{
+	//Test for RemoveFirst function
+	std::cout<< "Testing RemoveFirst.......... \n";
+}
+
+static void TestRemoveLast(void)
+{
+	//Test for RemoveLast function
+	std::cout<< "Testing RemoveLast.......... \n";
+}
+
+static void TestRemoveByIdx(void)
+{
+	//Test for RemoveByIdx function
+	std::cout<< "Testing RemoveByIdx.......... \n";
+}
+static void TestGetValByIdx(void)
+{
+	//Test for GetValByIdx function
+	std::cout<< "Testing GetValByIdx.......... \n";
+}
+static void TestInsert(void)
+{
+	//Test for Insert function
+	std::cout<< "Testing Insert.......... \n";
+
+}
+static void TestClear(void)
+{
+	//Test for Clear function
+	std::cout<< "Testing Clear.......... \n";
+}
+static void TestAll(void)
+{
+	//Test all
+	std::cout<< "Testing all function.......... \n";
+}
+
+int main(void)
+{
+	TestAddFirst();
+	TestAppend();
+	TestGetIndex();
+	TestRemove();
+	TestRemoveFirst();
+	TestRemoveLast();
+	TestRemoveByIdx();
+	TestGetValByIdx();
+	TestInsert();
+	TestClear();
+	TestAll();
+	TestGetNodeByIdx();
 	return 0;
 }
 
