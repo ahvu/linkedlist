@@ -49,45 +49,52 @@ protected:
 	unsigned int m_uiCapacity;
 	ListNode<T> *m_pFirst;
 	ListNode<T> *m_pLast ;
-	
+	E_LIST_ERROR_TYPE AddBefore(ListNode<T>& NewNode, ListNode<T>& BaseNode);
+	E_LIST_ERROR_TYPE AddBefore(T NodeVal, ListNode<T>& BaseNode);
 public:
 	LinkedList(unsigned int uiCapacity = 0);
 	LinkedList(ListNode<T> &Head, unsigned int uiCapacity = 0);
 	LinkedList(const LinkedList<T>& List, unsigned int uiCapacity = 0);
 	~LinkedList();
 	unsigned int GetCount(void);
+	unsigned int GetCapacity(void);
+	E_LIST_ERROR_TYPE GetValByIdx(T& RetVal,unsigned int uiIdx);
+	T& operator[](unsigned int uiIdx);
+	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int *puiIdxRet); // ok
 	E_LIST_ERROR_TYPE AddFirst (T NewHeadVal); 
-	E_LIST_ERROR_TYPE AddFirst (ListNode<T>& NewHead);
 	E_LIST_ERROR_TYPE Append (T NewLastVal);
-	E_LIST_ERROR_TYPE Append (ListNode<T>& NewLast);
-	E_LIST_ERROR_TYPE Insert (T NodeVal, unsigned int uiIdx);
-	E_LIST_ERROR_TYPE Insert (ListNode<T>& NewNode, unsigned int uiIdx);
-	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int *puiIdxRet);
+	E_LIST_ERROR_TYPE Insert (T NodeVal, unsigned int uiIdx); // ok 
 	E_LIST_ERROR_TYPE Remove (T val);
 	E_LIST_ERROR_TYPE RemoveFirst(void);
 	E_LIST_ERROR_TYPE RemoveLast(void);
 	E_LIST_ERROR_TYPE RemoveByIdx (unsigned int uiIndex);
+	E_LIST_ERROR_TYPE Clear(void);
 	E_LIST_ERROR_TYPE TraverseList();
-	E_LIST_ERROR_TYPE GetValByIdx(T& RetVal,unsigned int uiIdx);
 	E_LIST_ERROR_TYPE GetIndexList(T val, LinkedList<unsigned int>& idxList);
 	LinkedList<unsigned int>* GetIndexList(T val);
-	E_LIST_ERROR_TYPE Clear(void);
 
 private:
-	E_LIST_ERROR_TYPE AddBetween(ListNode<T>& Left, ListNode<T>& Right, ListNode<T>& NewNode);
-	E_LIST_ERROR_TYPE AddAfter(ListNode<T>& NewNode, ListNode<T>* BaseNode);
-	E_LIST_ERROR_TYPE AddAfter(T NodeVal, ListNode<T>* BaseNode);
-	E_LIST_ERROR_TYPE Insert(ListNode<T>& NewNode, ListNode<T>& BaseNode);
-	E_LIST_ERROR_TYPE Insert(T NodeVal, ListNode<T>& BaseNode);
-	ListNode<T>* Find(T Val);
-	ListNode<T>* FindLast(T Val);
+	//E_LIST_ERROR_TYPE AddBetween(ListNode<T>& Left, ListNode<T>& Right, ListNode<T>& NewNode);
+	//ListNode<T>* Find(T Val);      //Remove
+	//ListNode<T>* FindLast(T Val);  //Remove
+
 	ListNode<T>* GetNodeByIdx(unsigned int uiIdx);
 	E_LIST_ERROR_TYPE GetIndex(ListNode<T>& Node, unsigned int *puiIdxRet);
-	E_LIST_ERROR_TYPE Remove (ListNode<T>& Node);
+	E_LIST_ERROR_TYPE AddAfter(ListNode<T>& NewNode, ListNode<T>* BaseNode);
+	//E_LIST_ERROR_TYPE AddAfter(T NodeVal, ListNode<T>* BaseNode);
+	E_LIST_ERROR_TYPE AddFirst (ListNode<T>& NewHead);
+	E_LIST_ERROR_TYPE Append (ListNode<T>& NewLast);
+	E_LIST_ERROR_TYPE Insert (ListNode<T>& NewNode, unsigned int uiIdx);
 };
+template class LinkedList<unsigned int>;
+template class ListNode<unsigned int>;
+template class LinkedList<int>;
+template class ListNode<int>;
 
-#include<iostream>
-#include"dbg.h"
+#include <iostream>
+#include "LinkedList_Debug.h"
+
+using namespace std;
 /*
  * @brief: Macro definition
  */
@@ -102,7 +109,7 @@ template<class T>
 ListNode<T>::ListNode()
 {
 	m_pNextNode = NULL_PTR;
-	debug("New node created with no value");
+	//LIST_DEBUG("New node created with no value");
 }
 
 template<class T>
@@ -110,7 +117,7 @@ ListNode<T>::ListNode(T val)
 {
 	m_pNextNode = NULL_PTR;
 	m_Val = val;
-	debug("New node created with [value]@[address]: [%d]@[%x]", m_Val, this);
+	//LIST_DEBUG("New node created with [value]@[address]: [%d]@[%p]", m_Val, this);
 }
 
 template<class T>
@@ -119,13 +126,13 @@ ListNode<T>::ListNode(ListNode<T> &node)
 	m_pNextNode = NULL_PTR;
 	m_Val = node.m_Val;
     m_pNextNode = node.m_pNextNode;
-	debug("New node created with [value]@[address]: [%d]@[%x]", m_Val, this);
+   //LIST_DEBUG("New node created with [value]@[address]: [%d]@[%p]", m_Val, this);
 }
 
 template<class T>
 ListNode<T>::~ListNode()
 {
-	debug("Node [%d]@[%x] destroyed", m_Val,this);
+	//LIST_DEBUG("Node [%d]@[%p] destroyed", m_Val,this);
 }
 
 template <class T>
@@ -140,7 +147,6 @@ void ListNode<T>::SetVal(T new_val)
 	m_Val = new_val;
 }
 
-
 /*
  * @brief: LinkedList member definition
  */
@@ -151,7 +157,7 @@ LinkedList<T>::LinkedList(unsigned int uiCapacity)
 	m_pLast = NULL_PTR;
 	m_uiNodeCount = 0;
 	m_uiCapacity = uiCapacity;
-	debug("List@[%x] created with capacity %d", this, m_uiCapacity);
+	LIST_DEBUG("List@[%p] created with capacity %d", this, m_uiCapacity);
 }
 
 template<class T>
@@ -162,7 +168,7 @@ LinkedList<T>::LinkedList(ListNode<T>& Head, unsigned int uiCapacity)
 	m_uiNodeCount = 0;
 	m_uiCapacity = uiCapacity;
 	Append(Head);
-	debug("List@[%x] created with capacity %d, nCnt = %d", this, m_uiCapacity,m_uiNodeCount);
+	LIST_DEBUG("List@[%p] created with capacity %d", this, m_uiCapacity);
 }
 template<class T>
 LinkedList<T>::LinkedList(const LinkedList<T>& List, unsigned int uiCapacity)
@@ -170,20 +176,19 @@ LinkedList<T>::LinkedList(const LinkedList<T>& List, unsigned int uiCapacity)
 	m_pFirst = NULL_PTR;
 	m_pLast = NULL_PTR;
 	m_uiNodeCount = 0;
-	if (UNLIMITTED_LIST_SIZE != uiCapacity)
+	if(UNLIMITTED_LIST_SIZE != uiCapacity)
 	{
-		m_uiCapacity = (uiCapacity > List.m_uiCapacity) ? uiCapacity : List.m_uiCapacity;
+		m_uiCapacity = (uiCapacity > List.m_uiCapacity) ? uiCapacity: List.m_uiCapacity;
 	}
 	else
 	{
 		m_uiCapacity = UNLIMITTED_LIST_SIZE;
 	}
-
 	for(ListNode<T> *node = List.m_pFirst; node != NULL_PTR; node = node->m_pNextNode)
 	{
 		Append(*node);
 	}
-	debug("List@[%x] created with capacity %d, nCnt = %d", this, m_uiCapacity,m_uiNodeCount);
+	LIST_DEBUG("List@[%p] created with capacity %d", this, m_uiCapacity);
 }
 
 template<class T>
@@ -198,7 +203,7 @@ LinkedList<T>::~LinkedList()
 	}
 	m_pFirst = m_pLast = NULL_PTR;
 	m_uiNodeCount = 0;
-	debug("List@[%x] destroyed", this);
+	LIST_DEBUG("List@[%p] destroyed", this);
 }
 
 template <class T>
@@ -218,10 +223,11 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddFirst (ListNode<T>& NewHead)
 			m_pFirst = pNewHead;
 		}
         ++m_uiNodeCount;
-		debug("Added new node [value]@[address] = [%d]@[%x]", m_pFirst->m_Val, m_pFirst);
+        LIST_DEBUG("Added new node [value]@[address] = [%d]@[%p]", m_pFirst->m_Val, m_pFirst);
 	}
 	else
 	{
+		LIST_DEBUG("Error: Over capacity of list");
 		eErr = eLIST_OVER_CAPACITY;
 	}
 	return eErr;
@@ -244,10 +250,11 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddFirst (T NewHeadVal)
 			m_pFirst = pNewHead;
 		}
 		++m_uiNodeCount;
-		debug("Added new node [value]@[address] = [%d]@[%x] to List@[%x]", m_pFirst->m_Val, m_pFirst, this);
+		LIST_DEBUG("Added new node [value]@[address] = [%d]@[%p] to List@[%p]", m_pFirst->m_Val, m_pFirst, this);
 	}
 	else
 	{
+		LIST_DEBUG("Error: Over capacity of list");
 		eErr = eLIST_OVER_CAPACITY;
 	}
 	return eErr;
@@ -255,13 +262,14 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddFirst (T NewHeadVal)
 
 /*
  * @brief: find the first ListNode<T> & that contain value.
- * @return: Linked list node if the node is found, Otherwise return NULL_PTR
+ * @return: Linked list node ptr if the node is found, Otherwise return NULL_PTR
  */
 template<class T>
 ListNode<T>* LinkedList<T>::Find (T Val)
 {
 	if(0 == m_uiNodeCount)
 	{
+		LIST_DEBUG("Error: Empty list");
 		return NULL_PTR;
 	}
 	else
@@ -275,6 +283,10 @@ ListNode<T>* LinkedList<T>::Find (T Val)
 			}
 			pTempNode = pTempNode->m_pNextNode;
 		}
+#ifdef LINKED_LIST_DEBUG
+		if(pTempNode == NULL_PTR) LIST_DEBUG("No node found");
+		else LIST_DEBUG("Found Node@[%p] with value [%d]", pTempNode, Val);
+#endif
 		return pTempNode;
 	}
 }
@@ -284,6 +296,7 @@ ListNode<T>* LinkedList<T>::FindLast(T Val)
 {
 	if(0 == m_uiNodeCount)
 	{
+		LIST_DEBUG("Error: Empty list ");
 		return NULL_PTR;
 	}
 	else
@@ -298,28 +311,35 @@ ListNode<T>* LinkedList<T>::FindLast(T Val)
 			}
 			pNode = pNode->m_pNextNode;
 		}
-		debug("Found Node@[%x] with value [%d]", pRet, Val);
+#ifdef LINKED_LIST_DEBUG
+		if(pRet == NULL_PTR) LIST_DEBUG("No node found");
+		else LIST_DEBUG("Found Node@[%p] with value [%d]", pRet, Val);
+#endif
 		return pRet;
 	}
 }
 
 template<class T>
-E_LIST_ERROR_TYPE LinkedList<T>::Insert(T NodeVal, ListNode<T>& BaseNode)
+E_LIST_ERROR_TYPE LinkedList<T>::AddBefore(T NodeVal, ListNode<T>& BaseNode)
 {
 	ListNode<T> node(NodeVal);
-	return Insert(node, BaseNode);
+	return AddBefore(node, BaseNode);
 }
 
 template<class T>
-E_LIST_ERROR_TYPE LinkedList<T>::Insert(ListNode<T>& NewNode, ListNode<T>& BaseNode)
+E_LIST_ERROR_TYPE LinkedList<T>::AddBefore(ListNode<T>& NewNode, ListNode<T>& BaseNode)
 {
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 	unsigned int uiIdx = 0;
 	eErr = GetIndex(BaseNode, &uiIdx);
-
-	if (eErr != eLIST_NO_ERR) return eErr;
-	
-	return Insert(NewNode, uiIdx);
+	if (eErr != eLIST_NO_ERR)
+	{
+		return eErr;
+	}
+	else
+	{
+		return Insert(NewNode, uiIdx);
+	}
 }
 
 template<class T>
@@ -332,10 +352,16 @@ E_LIST_ERROR_TYPE LinkedList<T>::Insert(T NodeVal, unsigned int uiIdx)
 template<class T>
 E_LIST_ERROR_TYPE LinkedList<T>::Insert(ListNode<T>& NewNode, unsigned int uiIdx)
 {
+	if (uiIdx == 0) 
+	{
+		return AddFirst(NewNode);
+	}
+
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
 	if (m_uiNodeCount <= uiIdx)
 	{
+		LIST_DEBUG("Error: Invalid Index ");
 		eErr = eLIST_INVALID_INDEX;
 	}
 
@@ -344,19 +370,16 @@ E_LIST_ERROR_TYPE LinkedList<T>::Insert(ListNode<T>& NewNode, unsigned int uiIdx
 		return eErr;
 	}
 
-	if (uiIdx == 0)
+	ListNode<T>* pPrev = GetNodeByIdx(uiIdx - 1);
+	ListNode<T>* pCur = GetNodeByIdx(uiIdx);
+	if ((NULL_PTR != pPrev) && (NULL_PTR != pCur ))
 	{
-		eErr = AddFirst(NewNode);
+		eErr = AddBetween(*pPrev, *pCur, NewNode);
 	}
 	else
 	{
-		ListNode<T>* pPrev = GetNodeByIdx(uiIdx - 1);
-		ListNode<T>* pCur = GetNodeByIdx(uiIdx);
-		if (pPrev && pCur)
-		{
-			eErr = AddBetween(*pPrev, *pCur, NewNode);
-		}
-		else eErr = eLIST_INVALID_NODE;
+		LIST_DEBUG("Error: Invalid Node ");
+		eErr = eLIST_INVALID_NODE;
 	}
 
 	return eErr;
@@ -372,11 +395,8 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddAfter(ListNode<T>& NewNode, ListNode<T>* Bas
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 	if(0 == m_uiNodeCount)
 	{
+		LIST_DEBUG("Error: Empty list");
 		eErr = eLIST_EMPTY_LIST;
-	}
-	else if (&NewNode == NULL_PTR)
-	{
-		eErr = eLIST_INVALID_NODE;
 	}
 	else if((UNLIMITTED_LIST_SIZE == m_uiCapacity)||(m_uiNodeCount < m_uiCapacity))
 	{
@@ -391,6 +411,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddAfter(ListNode<T>& NewNode, ListNode<T>* Bas
 		}
 		if (NULL_PTR == pTempNode)
 		{
+			LIST_DEBUG("Error: Node not found");
 			eErr = eLIST_NODE_NOT_FOUND;
 		}
 		else
@@ -407,13 +428,12 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddAfter(ListNode<T>& NewNode, ListNode<T>* Bas
 				pTempNode->m_pNextNode = pNewNode;
 			}
 			++m_uiNodeCount;
-			std::cout << "Added new node [value][address] = [" << pNewNode->m_Val <<"][" << pNewNode << "]"\
-								<<"after node value: "<<pTempNode->m_Val<< std::endl;
+			LIST_DEBUG("Added new node [value][address] = [%d][%p]",pNewNode->m_Val,pNewNode);
 		}
 	}
 	else
 	{
-		std::cout<<"Over capacity for list !! \n";
+		LIST_DEBUG("Error: Over capacity of list");
 		eErr = eLIST_OVER_CAPACITY;
 	}
 	return eErr;
@@ -435,10 +455,17 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddBetween(ListNode<T>& Left, ListNode<T>& Righ
 {
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
+	if ((m_uiCapacity <= m_uiNodeCount) && (m_uiCapacity != UNLIMITTED_LIST_SIZE))
+	{
+		eErr = eLIST_OVER_CAPACITY;
+	}
+
 	if (Left.m_pNextNode != &Right)
 	{
+		LIST_DEBUG("Error: Invalid node");
 		eErr = eLIST_INVALID_NODE;
 	}
+
 
 	if (eErr != eLIST_NO_ERR)
 	{
@@ -457,18 +484,18 @@ template<class T>
 E_LIST_ERROR_TYPE LinkedList<T>::Append (ListNode<T>& NewLast)
 {
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-	if(m_uiCapacity <= m_uiNodeCount &&
-	   UNLIMITTED_LIST_SIZE != m_uiNodeCount)
+	if((m_uiCapacity <= m_uiNodeCount) && (UNLIMITTED_LIST_SIZE != m_uiNodeCount))
 	{
+		LIST_DEBUG("Error: Over capacity list");
 		eErr = eLIST_OVER_CAPACITY;
 	}
 
-	if (eErr != eLIST_NO_ERR) 
+	if (eErr != eLIST_NO_ERR)
 	{
 		return eErr;
 	}
 
-	ListNode<unsigned int> *node = new ListNode<T>(NewLast);
+	ListNode<T> *node = new ListNode<T>(NewLast);
 	if(NULL_PTR == m_pFirst)
 	{
 		m_pFirst = m_pLast = node;
@@ -480,7 +507,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::Append (ListNode<T>& NewLast)
 	}
 
 	m_uiNodeCount++;
-	debug("Added new node [value][address] = [%d]@[%x] to List@[%x]", m_pLast->m_Val, m_pLast, this);
+	LIST_DEBUG("Added new node [value][address] = [%d]@[%p] to List@[%p]", m_pLast->m_Val, m_pLast, this);
 
 	return eErr;
 }
@@ -489,9 +516,9 @@ template<class T>
 E_LIST_ERROR_TYPE LinkedList<T>::Append (T new_LastVal)
 {
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-	if (m_uiCapacity <= m_uiNodeCount &&
-		m_uiCapacity != UNLIMITTED_LIST_SIZE)
+	if ((m_uiCapacity <= m_uiNodeCount) &&(m_uiCapacity != UNLIMITTED_LIST_SIZE))
 	{
+		LIST_DEBUG("Error: Over capacity list");
 		eErr = eLIST_OVER_CAPACITY;
 	}
 
@@ -500,7 +527,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::Append (T new_LastVal)
 		return eErr;
 	}
 
-	ListNode<unsigned int> *node = new ListNode<T>(new_LastVal);
+	ListNode<T> *node = new ListNode<T>(new_LastVal);
 	if (0 == m_uiNodeCount)
 	{
 		m_pFirst = m_pLast = node;
@@ -511,7 +538,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::Append (T new_LastVal)
 		m_pLast = node;
 	}
 	m_uiNodeCount++;
-	debug("Added new node [value][address] = [%d]@[%x] to List@[%x]", m_pLast->m_Val, m_pLast, this);
+	LIST_DEBUG("Added new node [value][address] = [%d]@[%p] to List@[%p]", m_pLast->m_Val, m_pLast, this);
 
 	return eErr;
 }
@@ -538,7 +565,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::TraverseList()
 	unsigned int uiIdx = 0;
 	while (pNode != NULL_PTR)
 	{
-		
+
 		std::cout << "|" << uiIdx++ << "	|" << pNode->m_Val << "	|" << pNode << std::endl;
 		pNode = pNode->m_pNextNode;
 	}
@@ -552,6 +579,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::Remove(T val)
 
 	if (0 == m_uiNodeCount)
 	{
+		LIST_DEBUG("Error: Empty list");
 		eErr = eLIST_EMPTY_LIST;
 	}
 
@@ -588,13 +616,14 @@ E_LIST_ERROR_TYPE LinkedList<T>::Remove(T val)
 
 	if (found)
 	{
+		LIST_DEBUG("Info: Node with given value deleted");
 		this->m_uiNodeCount--;
 	}
 	else
 	{
+		LIST_DEBUG("Error: Node with given value not found");
 		eErr = eLIST_NODE_NOT_FOUND;
 	}
-
 	return eErr;
 }
 
@@ -604,7 +633,11 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveFirst()
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
 	if (m_uiNodeCount == 0)
+	{
+		LIST_DEBUG("Error: Empty list");
 		eErr = eLIST_EMPTY_LIST;
+	}
+
 
 	if (eErr != eLIST_NO_ERR)
 	{
@@ -615,7 +648,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveFirst()
 	m_pFirst = pCurrent->m_pNextNode;
 	delete pCurrent;
 	m_uiNodeCount--;
-
+	LIST_DEBUG("Info: Deleted first node");
 	if (m_uiNodeCount <= 1)
 		m_pLast = m_pFirst;
 
@@ -628,8 +661,10 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveLast()
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
 	if (m_uiNodeCount == 0)
+	{
+		LIST_DEBUG("Error: Empty list");
 		eErr = eLIST_EMPTY_LIST;
-
+	}
 	if (eErr != eLIST_NO_ERR)
 	{
 		return eErr;
@@ -637,7 +672,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveLast()
 	
 	delete m_pLast;
 	m_uiNodeCount--;
-
+	LIST_DEBUG("Info: Last node deleted");
 	if (m_uiNodeCount == 0)
 	{
 		m_pLast = NULL_PTR;
@@ -652,6 +687,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveLast()
 		}
 		else
 		{
+			LIST_DEBUG("Error: Invalid node");
 			eErr = eLIST_INVALID_NODE;
 		}
 	}
@@ -669,13 +705,15 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveByIdx(unsigned int uiIndex)
 {
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
-	if (m_uiNodeCount == 0) 
+	if (m_uiNodeCount <= uiIndex)
 	{
-		eErr = eLIST_EMPTY_LIST; 
+		LIST_DEBUG("Error: Invalid index");
+		eErr = eLIST_INVALID_INDEX;
 	}
-	if (m_uiNodeCount <= uiIndex) 
+	if (m_uiNodeCount == 0)
 	{
-		eErr = eLIST_INVALID_INDEX; 
+		LIST_DEBUG("Error: Empty list");
+		eErr = eLIST_EMPTY_LIST;
 	}
 
 	if (eErr != eLIST_NO_ERR)
@@ -695,14 +733,16 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveByIdx(unsigned int uiIndex)
 	{
 		ListNode<T>* pCur = GetNodeByIdx(uiIndex);
 		ListNode<T>* pPrev = GetNodeByIdx(uiIndex - 1);
-		if (pCur && pPrev)
+		if ((NULL_PTR != pCur) && (NULL_PTR != pPrev))
 		{
 			pPrev->m_pNextNode = pCur->m_pNextNode;
 			delete pCur;
 			m_uiNodeCount--;
+			LIST_DEBUG("Info: Node with given index removed");
 		}
 		else
 		{
+			LIST_DEBUG("Error: Invalid index");
 			eErr = eLIST_INVALID_INDEX;
 		}
 	}
@@ -714,14 +754,15 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndex(T val, unsigned int *puiIdxRet)
 {
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
-	if (m_uiNodeCount == 0) 
-	{ 
-		eErr = eLIST_EMPTY_LIST; 
+	if (m_uiNodeCount == 0)
+	{
+		LIST_DEBUG("Error: Empty list");
+		eErr = eLIST_EMPTY_LIST;
 	}
 
-	if (eErr != eLIST_NO_ERR) 
+	if (eErr != eLIST_NO_ERR)
 	{
-		return eErr; 
+		return eErr;
 	}
 
 	ListNode<T>* pCurrent = this->m_pFirst;
@@ -733,13 +774,18 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndex(T val, unsigned int *puiIdxRet)
 		{
 			*puiIdxRet = uiIdx;
 			bFound = true;
+			LIST_DEBUG("Info: Found index value: %d",uiIdx);
 			break;
 		}
 		pCurrent = pCurrent->m_pNextNode;
 		uiIdx++;
 	}
 
-	if (!bFound) { eErr = eLIST_NODE_NOT_FOUND; }
+	if (!bFound)
+	{
+		LIST_DEBUG("Error: Node not found with given value");
+		eErr = eLIST_NODE_NOT_FOUND;
+	}
 	return eErr;
 }
 
@@ -750,6 +796,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndex(ListNode<T>& Node, unsigned int *puiId
 
 	if (0 == m_uiNodeCount)
 	{
+		LIST_DEBUG("Error: Empty list ");
 		eErr = eLIST_EMPTY_LIST;
 	}
 
@@ -763,6 +810,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndex(ListNode<T>& Node, unsigned int *puiId
 		{
 			*puiIdxRet = uiIdx;
 			bFound = true;
+			LIST_DEBUG("Info: Found index value: %d",uiIdx);
 			break;
 		}
 		pCurrent = pCurrent->m_pNextNode;
@@ -771,6 +819,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndex(ListNode<T>& Node, unsigned int *puiId
 
 	if (!bFound)
 	{
+		LIST_DEBUG("Error: Node not found");
 		eErr = eLIST_NODE_NOT_FOUND;
 	}
 
@@ -796,18 +845,36 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetValByIdx(T& RetVal,unsigned int uiIdx)
 }
 
 template<class T>
+T& LinkedList<T>::operator[](const unsigned int uiIdx)
+{
+	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	ListNode<T>* pNode = GetNodeByIdx(uiIdx);
+	if (pNode)
+	{
+		return pNode->m_Val;
+	}
+	else
+	{
+		T rubbish;
+		return rubbish;
+	}
+}
+
+template<class T>
 ListNode<T>* LinkedList<T>::GetNodeByIdx(unsigned int uiIdx)
 {
-	if (uiIdx >= m_uiNodeCount) 
-	{ 
-		return NULL_PTR; 
+	if (uiIdx >= m_uiNodeCount)
+	{
+		LIST_DEBUG("Error: Invalid index");
+		return NULL_PTR;
 	}
 
 	ListNode<T> *pNode = this->m_pFirst;
-	unsigned int ui = 0;
-	while ((pNode != NULL_PTR) && (ui++ < uiIdx))
+	unsigned int uiIdxCount = 0;
+	while ((pNode != NULL_PTR) && (uiIdxCount < uiIdx))
 	{
 		pNode = pNode->m_pNextNode;
+		++uiIdxCount;
 	}
 	return pNode;
 }
@@ -819,6 +886,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndexList(T val, LinkedList<unsigned int>& i
 
 	if (m_uiNodeCount == 0) 
 	{ 
+		LIST_DEBUG("Error: Empty list");
 		eErr = eLIST_EMPTY_LIST; 
 	}
 
@@ -831,7 +899,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndexList(T val, LinkedList<unsigned int>& i
 
 	unsigned int uiIdx = 0;
 	bool bFound = false;
-	for (ListNode<T>* pCur = m_pFirst; pCur != NULL_PTR; pCur = pCur->m_pNextNode, uiIdx++)
+	for (ListNode<T>* pCur = m_pFirst; pCur != NULL_PTR; pCur = pCur->m_pNextNode, ++uiIdx)
 	{
 		if (pCur->m_Val == val)
 		{
@@ -842,6 +910,7 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndexList(T val, LinkedList<unsigned int>& i
 
 	if (!bFound)
 	{
+		LIST_DEBUG("Error: Node not found");
 		eErr = eLIST_NODE_NOT_FOUND;
 	}
 
@@ -851,15 +920,28 @@ E_LIST_ERROR_TYPE LinkedList<T>::GetIndexList(T val, LinkedList<unsigned int>& i
 template <class T>
 LinkedList<unsigned int>* LinkedList<T>::GetIndexList(T val)
 {
+	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 	LinkedList<unsigned int>* pList = new LinkedList<unsigned int>(0);
-	GetIndexList(val, *pList);
+	eErr = GetIndexList(val, *pList);
+	if(eLIST_NO_ERR != eErr)
+	{
+		delete pList;
+		pList = NULL_PTR;
+	}
 	return pList;
 }
 
 template<class T>
 unsigned int LinkedList<T>::GetCount(void)
 {
+	LIST_DEBUG("Number of elements in list: %d",m_uiNodeCount);
 	return this->m_uiNodeCount;
+}
+
+template<class T>
+unsigned int LinkedList<T>::GetCapacity(void)
+{
+	return m_uiCapacity;
 }
 
 template<class T>
@@ -872,8 +954,4 @@ E_LIST_ERROR_TYPE LinkedList<T>::Clear(void)
 	}
 	return eErr;
 }
-
-template class LinkedList<unsigned int>;
-template class ListNode<unsigned int>;
-
 #endif /* LINKED_LIST_H_ */

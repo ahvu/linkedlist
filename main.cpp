@@ -7,10 +7,13 @@
 
 #include <iostream>
 #include "Linked_List.h"
-#include "dbg.h"
+#include "LinkedList_Debug.h"
+#include <vector>
 
 int main()
 {
+	std::vector<int> vi(2, 3);
+	std::cout << vi[0] << vi[1] << std::endl;
 	//ListNode<unsigned int> *n1 = new ListNode<unsigned int>(1);
 	//ListNode<unsigned int> *n2 = new ListNode<unsigned int>(2);
 	//ListNode<unsigned int> *n3 = new ListNode<unsigned int>(3);
