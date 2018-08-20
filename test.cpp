@@ -1,24 +1,25 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "Linked_List.h"
+#include "list_node.h"
+#include "linked_list.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest1
-{		
+{
 	TEST_CLASS(USER_LINKLIST)
 	{
 	public:
-		
+
 		TEST_METHOD(Test_NodeCtor)
 		{
-			ListNode<unsigned int> a(10);
+			Node<unsigned int> a(10);
 			Assert::IsTrue(a.GetVal() == 10);
 		}
 
 		TEST_METHOD(Test_NodeSetVal)
 		{
-			ListNode<unsigned int> a(10);
+			Node<unsigned int> a(10);
 			a.SetVal(5);
 			Assert::IsTrue(a.GetVal() == 5);
 		}
@@ -41,14 +42,14 @@ namespace UnitTest1
 				if (i < 10)
 				{
 					Assert::IsTrue(eErr == eLIST_NO_ERR);
-					Assert::IsTrue(_List.GetCount() == (i+1));
+					Assert::IsTrue(_List.GetCount() == (i + 1));
 				}
 				else
 				{
 					Assert::IsTrue(eErr == eLIST_OVER_CAPACITY);
 				}
 			}
-			
+
 			unsigned int first = 100;
 			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 			eErr = _List.GetValByIdx(first, 20);
@@ -78,14 +79,14 @@ namespace UnitTest1
 				if (i < 10)
 				{
 					Assert::IsTrue(eErr == eLIST_NO_ERR);
-					Assert::IsTrue(_List.GetCount() == (i+1));
+					Assert::IsTrue(_List.GetCount() == (i + 1));
 				}
 				else
 				{
 					Assert::IsTrue(eErr == eLIST_OVER_CAPACITY);
 				}
 			}
-			
+
 			unsigned int uiTmp = 100;
 
 			uiTmp = _List[0];
@@ -108,11 +109,11 @@ namespace UnitTest1
 			for (unsigned int i = 0; i < 10; i++)
 			{
 				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-				eErr = _List.Append(i*2);
+				eErr = _List.Append(i * 2);
 				if (i < 10)
 				{
 					Assert::IsTrue(eErr == eLIST_NO_ERR);
-					Assert::IsTrue(_List.GetCount() == (i+1));
+					Assert::IsTrue(_List.GetCount() == (i + 1));
 				}
 			}
 			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
@@ -145,7 +146,7 @@ namespace UnitTest1
 				if (i < 10)
 				{
 					Assert::IsTrue(eErr == eLIST_NO_ERR);
-					Assert::IsTrue(_List.GetCount() == (i+1));
+					Assert::IsTrue(_List.GetCount() == (i + 1));
 					unsigned int first = 100;
 					_List.GetValByIdx(first, 0);
 					Assert::IsTrue(first == i);
@@ -168,7 +169,7 @@ namespace UnitTest1
 				if (i < 10)
 				{
 					Assert::IsTrue(eErr == eLIST_NO_ERR);
-					Assert::IsTrue(_List.GetCount() == (i+1));
+					Assert::IsTrue(_List.GetCount() == (i + 1));
 					unsigned int last = 100;
 					_List.GetValByIdx(last, _List.GetCount() - 1);
 					Assert::IsTrue(last == i);
@@ -189,7 +190,7 @@ namespace UnitTest1
 				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 				eErr = _List.Append(i);
 				Assert::IsTrue(eErr == eLIST_NO_ERR);
-				Assert::IsTrue(_List.GetCount() == (i+1));
+				Assert::IsTrue(_List.GetCount() == (i + 1));
 			}
 			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
@@ -215,7 +216,7 @@ namespace UnitTest1
 			_List.GetValByIdx(uiTmp, uiIdx);
 			Assert::IsTrue(uiTmp == setVal);
 			Assert::IsTrue(++curCnt = _List.GetCount());
-			
+
 			uiIdx = 9;
 			eErr = _List.Insert(setVal, uiIdx);
 			Assert::IsTrue(eErr == eLIST_NO_ERR);
@@ -227,6 +228,31 @@ namespace UnitTest1
 			eErr = _List.Insert(setVal, uiIdx);
 			Assert::IsTrue(curCnt == _List.GetCount());
 			Assert::IsTrue(eErr == eLIST_OVER_CAPACITY);
+		}
+		TEST_METHOD(Test_InsertList)
+		{
+			//LinkedList<unsigned int> List1(20);
+			//LinkedList<unsigned int> List2(20);
+
+			//for (unsigned int i = 0; i < 10; i++)
+			//{
+			//	List1.Append(i);
+			//	List2.Append(i);
+			//}
+			//Assert::IsTrue(List1.GetCount() == 10);
+			//E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+
+			//eErr = List1.Insert(List2, 5);
+			//Assert::IsTrue(eErr == eLIST_NO_ERR);
+
+			//Assert::IsTrue(List1.GetCapacity() == 40);
+
+			//Assert::IsTrue(List1.GetCount() == 20);
+
+			//for (int i = 0; i > 10; i++)
+			//{
+			//	Assert::IsTrue(List1[i + 5] == List2[2]);
+			//}
 		}
 
 		TEST_METHOD(Test_Remove)
@@ -244,7 +270,7 @@ namespace UnitTest1
 				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 				eErr = _List.Append(i);
 				Assert::IsTrue(eErr == eLIST_NO_ERR);
-				Assert::IsTrue(_List.GetCount() == (i+1));
+				Assert::IsTrue(_List.GetCount() == (i + 1));
 			}
 
 			unsigned int curCnt = _List.GetCount();
@@ -257,7 +283,7 @@ namespace UnitTest1
 			Assert::IsTrue(eErr == eLIST_NO_ERR);
 			Assert::IsTrue(--curCnt == _List.GetCount());
 		}
-		
+
 		TEST_METHOD(Test_RemoveFirst)
 		{
 			LinkedList<unsigned int> _List(13);
@@ -273,7 +299,7 @@ namespace UnitTest1
 				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 				eErr = _List.Append(i);
 				Assert::IsTrue(eErr == eLIST_NO_ERR);
-				Assert::IsTrue(_List.GetCount() == (i+1));
+				Assert::IsTrue(_List.GetCount() == (i + 1));
 			}
 
 			unsigned int curCnt = _List.GetCount();
@@ -285,7 +311,7 @@ namespace UnitTest1
 			Assert::IsTrue(uiFirst == 1);
 			Assert::IsTrue(--curCnt == _List.GetCount());
 		}
-		
+
 		TEST_METHOD(Test_RemoveLast)
 		{
 			LinkedList<unsigned int> _List(13);
@@ -300,14 +326,14 @@ namespace UnitTest1
 				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 				eErr = _List.Append(i);
 				Assert::IsTrue(eErr == eLIST_NO_ERR);
-				Assert::IsTrue(_List.GetCount() == (i+1));
+				Assert::IsTrue(_List.GetCount() == (i + 1));
 			}
 
 			unsigned int curCnt = _List.GetCount();
 
 			unsigned int uiLast = 100;
 			eErr = _List.RemoveLast();
-			_List.GetValByIdx(uiLast, _List.GetCount()-1);
+			_List.GetValByIdx(uiLast, _List.GetCount() - 1);
 			Assert::IsTrue(eErr == eLIST_NO_ERR);
 			Assert::IsTrue(uiLast == 8);
 			Assert::IsTrue(--curCnt == _List.GetCount());
@@ -327,7 +353,7 @@ namespace UnitTest1
 				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 				eErr = _List.Append(i);
 				Assert::IsTrue(eErr == eLIST_NO_ERR);
-				Assert::IsTrue(_List.GetCount() == (i+1));
+				Assert::IsTrue(_List.GetCount() == (i + 1));
 			}
 
 			unsigned int curCnt = _List.GetCount();
@@ -381,7 +407,7 @@ namespace UnitTest1
 				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 				eErr = _List.Append(i);
 				Assert::IsTrue(eErr == eLIST_NO_ERR);
-				Assert::IsTrue(_List.GetCount() == (i+1));
+				Assert::IsTrue(_List.GetCount() == (i + 1));
 			}
 
 			eErr = _List.Clear();
@@ -404,7 +430,7 @@ namespace UnitTest1
 				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 				eErr = _List.Append(i);
 				Assert::IsTrue(eErr == eLIST_NO_ERR);
-				Assert::IsTrue(_List.GetCount() == (i+1));
+				Assert::IsTrue(_List.GetCount() == (i + 1));
 			}
 
 			for (unsigned int i = 0; i < 5; i++)
