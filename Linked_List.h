@@ -32,10 +32,11 @@ class LinkedList
 protected:
 	unsigned int m_uiNodeCount;
 	unsigned int m_uiCapacity;
+public:
 	Node<T> *m_pFirst;
 	Node<T> *m_pLast ;
 	E_LIST_ERROR_TYPE Insert (Node<T>& NewNode, unsigned int uiIdx);
-public:
+
 	LinkedList(unsigned int uiCapacity = 0);
 	LinkedList(Node<T> &Head, unsigned int uiCapacity = 0);
 	LinkedList(const LinkedList<T>& List);
@@ -44,8 +45,9 @@ public:
 	unsigned int GetCapacity(void);
 	E_LIST_ERROR_TYPE GetValByIdx(T& RetVal,unsigned int uiIdx);
 	T& operator[](unsigned int uiIdx);
-	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int *puiIdxRet);
+	E_LIST_ERROR_TYPE GetIndex(T val, unsigned int& ruiIdxRet);
 	E_LIST_ERROR_TYPE AddFirst (T NewHeadVal); 
+	E_LIST_ERROR_TYPE InsertList (LinkedList<T>& InList, unsigned int uiIdx);
 	E_LIST_ERROR_TYPE Insert (T NodeVal, unsigned int uiIdx);
 	E_LIST_ERROR_TYPE Append (T NewLastVal);
 	E_LIST_ERROR_TYPE Remove (T val);
@@ -55,12 +57,11 @@ public:
 	E_LIST_ERROR_TYPE Clear(void);
 	E_LIST_ERROR_TYPE TraverseList();
 	E_LIST_ERROR_TYPE GetIndexList(T val, LinkedList<unsigned int>& idxList);
-	LinkedList<unsigned int>* GetIndexList(T val);
 
-private:
 	Node<T>* GetNodeByIdx(unsigned int uiIdx);
 	E_LIST_ERROR_TYPE AddFirst (Node<T>& NewHead);
 	E_LIST_ERROR_TYPE Append (Node<T>& NewLast);
+private:
 	int compare(T val1,T val2);
 };
 

@@ -84,7 +84,7 @@ static void TestGetIndex(void)
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
 	printf("index of 2: ");
-	eErr = uiList_1.GetIndex(2,&uiTmp);
+	eErr = uiList_1.GetIndex(2,uiTmp);
 	if (eErr != eLIST_NO_ERR)
 	{
 		printf("Error %d\r\n", eErr);
@@ -95,7 +95,7 @@ static void TestGetIndex(void)
 	}
 
 	printf("index of 6: ");
-	eErr = uiList_1.GetIndex(6,&uiTmp);
+	eErr = uiList_1.GetIndex(6,uiTmp);
 	if (eErr != eLIST_NO_ERR)
 	{
 		printf("Error %d\r\n", eErr);
@@ -106,7 +106,7 @@ static void TestGetIndex(void)
 	}
 
 	printf("index of 17: ");
-	eErr = uiList_1.GetIndex(17,&uiTmp);
+	eErr = uiList_1.GetIndex(17,uiTmp);
 	if (eErr != eLIST_NO_ERR)
 	{
 		printf("Error %d\r\n", eErr);
@@ -311,30 +311,30 @@ static void TestGetIndexList(void)
 	uiList.Append(1);
 	uiList.TraverseList();
 
-	//Test with value 1 - 5 appearances
-	LinkedList<unsigned int> *puiListRet1,*puiListRet2;
-	puiListRet1 = uiList.GetIndexList(1);
-	puiListRet1->TraverseList();
-	delete(puiListRet1);
+	////Test with value 1 - 5 appearances
+	//LinkedList<unsigned int> *puiListRet1,*puiListRet2;
+	//puiListRet1 = uiList.GetIndexList(1);
+	//puiListRet1->TraverseList();
+	//delete(puiListRet1);
 
-	//Test with value 3 - 2 appearances
-	puiListRet2 = uiList.GetIndexList(3);
-	puiListRet2->TraverseList();
-	delete(puiListRet2);
+	////Test with value 3 - 2 appearances
+	//puiListRet2 = uiList.GetIndexList(3);
+	//puiListRet2->TraverseList();
+	//delete(puiListRet2);
 
-	//Test with value 4 - 1 appearances
-	puiListRet2 = uiList.GetIndexList(4);
-	puiListRet2->TraverseList();
-	delete(puiListRet2);
-	uiList.TraverseList();
+	////Test with value 4 - 1 appearances
+	//puiListRet2 = uiList.GetIndexList(4);
+	//puiListRet2->TraverseList();
+	//delete(puiListRet2);
+	//uiList.TraverseList();
 
-	LinkedList<unsigned int> uiListRet1, uiListRet2;
-	uiList.GetIndexList(1,uiListRet1);
-	uiListRet1.TraverseList();
-	uiList.GetIndexList(3,uiListRet2);
-	uiListRet2.TraverseList();
-	uiList.GetIndexList(4,uiListRet2);
-	uiListRet2.TraverseList();
+	//LinkedList<unsigned int> uiListRet1, uiListRet2;
+	//uiList.GetIndexList(1,uiListRet1);
+	//uiListRet1.TraverseList();
+	//uiList.GetIndexList(3,uiListRet2);
+	//uiListRet2.TraverseList();
+	//uiList.GetIndexList(4,uiListRet2);
+	//uiListRet2.TraverseList();
 }
 
 
