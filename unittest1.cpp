@@ -7,30 +7,30 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest1
 {		
-	// E_LIST_ERROR_TYPE InsertList (LinkedList<T>& InList, unsigned int uiIdx);
-	TEST_CLASS(Test_InsertList)
+	// E_LIST_ERROR_TYPE Insert (LinkedList<T>& InList, unsigned int uiIdx);
+	TEST_CLASS(Test_Insert)
 	{
 	public:
 		/*
-		 * Test_InsertList_1
+		 * Test_Insert_1
 		 * Input: InList empty, idx = 0
 		 * Expected output: eErr = eLIST_EMPTY_LIST;
 		 */
-		TEST_METHOD(Test_InsertList_1)
+		TEST_METHOD(Test_Insert_1)
 		{
 			LinkedList<unsigned int> List1(5);
 			LinkedList<unsigned int> List2(10);
 			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			eErr = List1.InsertList(List2, 0);
+			eErr = List1.Insert(List2, 0);
 			Assert::IsTrue(eErr == eLIST_EMPTY_LIST);
 		}
 
 		/*
-		 * Test_InsertList_2
+		 * Test_Insert_2
 		 * Input: InList with 10 elements, List with capacity 5, idx = 0
 		 * Expected output: eErr = eLIST_OVER_CAPACITY;
 		 */
-		TEST_METHOD(Test_InsertList_2)
+		TEST_METHOD(Test_Insert_2)
 		{
 			LinkedList<unsigned int> List1(5);
 			LinkedList<unsigned int> List2(10);
@@ -40,16 +40,16 @@ namespace UnitTest1
 			}
 			Assert::IsTrue(List2.GetCount() == 10);
 			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			eErr = List1.InsertList(List2, 0);
+			eErr = List1.Insert(List2, 0);
 			Assert::IsTrue(eErr == eLIST_OVER_CAPACITY);
 		}
 
 		/*
-		 * Test_InsertList_3
+		 * Test_Insert_3
 		 * Input: InList with 10 elements, List with capacity 15, idx = invalid 
 		 * Expected output: eErr = eLIST_INVALID_INDEX;
 		 */
-		TEST_METHOD(Test_InsertList_3)
+		TEST_METHOD(Test_Insert_3)
 		{
 			LinkedList<unsigned int> List1(15);
 			LinkedList<unsigned int> List2(10);
@@ -59,12 +59,12 @@ namespace UnitTest1
 			}
 			Assert::IsTrue(List2.GetCount() == 10);
 			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			eErr = List1.InsertList(List2, 1);
+			eErr = List1.Insert(List2, 1);
 			Assert::IsTrue(eErr == eLIST_INVALID_INDEX);
 		}
 
 		/*
-		 * Test_InsertList_4
+		 * Test_Insert_4
 		 * Input: InList with 10 elements, List with unlimited capacity, 
 			      idx = first 
 				  idx = middle
@@ -72,7 +72,7 @@ namespace UnitTest1
 		 * Expected output: eErr = eLIST_NO_ERR;
 							list inserted
 		 */
-		TEST_METHOD(Test_InsertList_4)
+		TEST_METHOD(Test_Insert_4)
 		{
 			LinkedList<unsigned int> List1(0);
 			LinkedList<unsigned int> List2(10);
@@ -83,17 +83,17 @@ namespace UnitTest1
 			Assert::IsTrue(List2.GetCount() == 10);
 			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
-			eErr = List1.InsertList(List2, 0);
+			eErr = List1.Insert(List2, 0);
 			Assert::IsTrue(eErr == eLIST_NO_ERR);
 			Assert::IsTrue(List1.GetCount() == 10);
 			Assert::IsTrue(List1[5] == 5);
 
-			eErr = List1.InsertList(List2, 5);
+			eErr = List1.Insert(List2, 5);
 			Assert::IsTrue(eErr == eLIST_NO_ERR);
 			Assert::IsTrue(List1.GetCount() == 20);
 			Assert::IsTrue(List1[5] == 0);
 
-			eErr = List1.InsertList(List2, List1.GetCount() - 1);
+			eErr = List1.Insert(List2, List1.GetCount() - 1);
 			Assert::IsTrue(eErr == eLIST_NO_ERR);
 			Assert::IsTrue(List1.GetCount() == 30);
 			Assert::IsTrue(List1[List1.GetCount() - 1] == 9);
