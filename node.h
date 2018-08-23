@@ -17,8 +17,7 @@ protected:
 	T m_Val;
 	Node<T> *m_pNextNode;
 public:
-	Node();
-	Node(T val);
+	Node(T val = T());
 	Node(const Node<T> &Node);
 	~Node();
 	T& GetVal(void);
@@ -30,12 +29,6 @@ public:
 /*
  * @brief: ListNode member definition
  */
-template<class T>
-Node<T>::Node()
-{
-	m_pNextNode = NULL_PTR;
-}
-
 template<class T>
 Node<T>::Node(T Val)
 {
