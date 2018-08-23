@@ -22,20 +22,44 @@ typedef enum _E_LIST_ERROR_TYPE
 	eLIST_MAX_ERR
 }E_LIST_ERROR_TYPE;
 
-
+inline E_LIST_ERROR_TYPE LL_ASSERT(E_LIST_ERROR_TYPE err)
+{
+	switch(err)
+	{
+		case eLIST_NO_ERR:
+		case eLIST_EMPTY_LIST:
+		case eLIST_OVER_CAPACITY:
+		case eLIST_INVALID_INDEX:
+		case eLIST_OUT_OF_MEMORY:
+		default:
+			return err;
+			break;
+	}
+}
 template <class T>
 class LinkedList
 {
 protected:
 	unsigned int m_uiNodeCount;
 	unsigned int m_uiCapacity;
+#ifndef UNITTEST 
 	Node<T> *m_pFirst;
 	Node<T> *m_pLast ;
 
     LinkedList(Node<T> &rHead, unsigned int uiCapacity = 0);
     E_LIST_ERROR_TYPE Insert(Node<T>& rNewNode, unsigned int uiIdx);
+#endif
     
 public:
+
+#ifdef UNITTEST 
+	Node<T> *m_pFirst;
+	Node<T> *m_pLast ;
+
+    LinkedList(Node<T> &rHead, unsigned int uiCapacity = 0);
+    E_LIST_ERROR_TYPE Insert(Node<T>& rNewNode, unsigned int uiIdx);
+#endif
+
 	LinkedList(unsigned int uiCapacity = 0);
     LinkedList(const LinkedList<T>& rList);
 	~LinkedList();
@@ -61,12 +85,22 @@ public:
 
     T& operator[](unsigned int uiIdx);
 
-private:
+#ifdef UNITTEST 
     E_LIST_ERROR_TYPE TraverseList();
 	Node<T>* GetNodeByIdx(unsigned int uiIdx);
     E_LIST_ERROR_TYPE AddFirst(Node<T>& rNewHead);
     E_LIST_ERROR_TYPE Append(Node<T>& rNewLast);
     int Compare(T Val1, T Val2);
+#endif
+
+private:
+#ifndef UNITTEST
+    E_LIST_ERROR_TYPE TraverseList();
+	Node<T>* GetNodeByIdx(unsigned int uiIdx);
+    E_LIST_ERROR_TYPE AddFirst(Node<T>& rNewHead);
+    E_LIST_ERROR_TYPE Append(Node<T>& rNewLast);
+    int Compare(T Val1, T Val2);
+#endif
 };
 
 
@@ -105,9 +139,14 @@ LinkedList<T>::LinkedList(Node<T>& rHead, unsigned int uiCapacity)
 template<class T>
 E_LIST_ERROR_TYPE LinkedList<T>::Insert(Node<T>& rNewNode, unsigned int uiIdx)
 {
-	if (m_uiNodeCount <= uiIdx)
+	if (m_uiNodeCount == uiIdx)
 	{
 		return Append(rNewNode);
+	}
+
+	if (m_uiNodeCount < uiIdx)
+	{
+		return eLIST_INVALID_INDEX;
 	}
 
 	if ((m_uiCapacity <= m_uiNodeCount) && (m_uiCapacity != UNLIMITTED_LIST_SIZE))
@@ -120,11 +159,17 @@ E_LIST_ERROR_TYPE LinkedList<T>::Insert(Node<T>& rNewNode, unsigned int uiIdx)
         return AddFirst(rNewNode);
 	}
 
+    Node<T> *pNode = new Node<T>(rNewNode);
+
+	if(pNode == NULL_PTR)
+	{
+		return LL_ASSERT(eLIST_OUT_OF_MEMORY);
+	}
+
 	Node<T>* pPrev = GetNodeByIdx(uiIdx - 1);
 	Node<T>* pCur = GetNodeByIdx(uiIdx);
-    Node<T> *pNewNode = new Node<T>(rNewNode);
-    pPrev->SetNextNode(pNewNode);
-    pNewNode->SetNextNode(pCur);
+    pPrev->SetNextNode(pNode);
+    pNode->SetNextNode(pCur);
 	m_uiNodeCount++;
 
 	return eLIST_NO_ERR;
@@ -149,9 +194,9 @@ LinkedList<T>::LinkedList(const LinkedList<T>& List)
 	m_pLast = NULL_PTR;
 	m_uiNodeCount = 0;
 	m_uiCapacity = List.m_uiCapacity;
-	for(Node<T> *pNewNode = List.m_pFirst; pNewNode != NULL_PTR; pNewNode = pNewNode->GetNextNode())
+	for(Node<T> *pNode = List.m_pFirst; pNode != NULL_PTR; pNode = pNode->GetNextNode())
 	{
-		Append(*pNewNode);
+		Append(*pNode);
 	}
 	LIST_DEBUG("List@[%p] created with capacity %d", this, m_uiCapacity);
 }
@@ -188,7 +233,7 @@ template<class T>
 E_LIST_ERROR_TYPE LinkedList<T>::Insert(LinkedList<T>& InList, unsigned int uiIdx)
 {
     if ((uiIdx > 0) &&
-        (uiIdx >= m_uiNodeCount))
+        (uiIdx > m_uiNodeCount))
     {
         return eLIST_INVALID_INDEX;
     }
@@ -221,23 +266,23 @@ E_LIST_ERROR_TYPE LinkedList<T>::Insert(LinkedList<T>& InList, unsigned int uiId
         {
             eErr = Insert(*pNodeInList, uiIdx++);
             pNodeInList = pNodeInList->GetNextNode();
-        }
     }
+        }
     return eErr;
 }
 template<class T>
 E_LIST_ERROR_TYPE LinkedList<T>::Append (T NewLastVal)
 {
 	Node<T> NewNode(NewLastVal);
+	// TODO: unify all to insert
 	return Append(NewNode);
 }
+
 template<class T>
 E_LIST_ERROR_TYPE LinkedList<T>::Append(LinkedList<T>& InList)
 {
-	return eLIST_NO_ERR;
+	return Insert(InList, m_uiNodeCount);
 }
-
-
 
 template<class T>
 unsigned int LinkedList<T>::GetCount(void)
@@ -293,25 +338,18 @@ E_LIST_ERROR_TYPE LinkedList<T>::RemoveLast()
 	delete m_pLast;
 	m_uiNodeCount--;
 	LIST_DEBUG("Info: Last node deleted");
-	if (m_uiNodeCount == 0)
-	{
-		m_pLast = NULL_PTR;
-	}
-	else
+	if(m_uiNodeCount >= 1)
 	{
 		Node<T>* pPrev = GetNodeByIdx(m_uiNodeCount - 1);
-        if (pPrev)
-        {
 		pPrev->SetNextNode(NULL_PTR);
 		m_pLast = pPrev;
 	}
-        else
-        {
-            LIST_DEBUG("Error: Invalid node");
-            eErr = eLIST_INVALID_NODE;
-        }
-    }
-	
+	else
+	{
+		m_pLast = NULL_PTR;	
+	}
+
+	// Couldn't merge to upper "if" since these are 2 different purposes: assign m_First vs assign m_pLast
 	if (m_uiNodeCount <= 1)
 	{
 		m_pFirst = m_pLast;
@@ -566,6 +604,12 @@ E_LIST_ERROR_TYPE LinkedList<T>::AddFirst(Node<T>& rNewHead)
 	if ((UNLIMITTED_LIST_SIZE == m_uiCapacity)||(m_uiNodeCount < m_uiCapacity))
 	{
         Node<T> *pNewHead = new Node<T>(rNewHead);
+
+		if(pNewHead == NULL_PTR)
+		{
+			return LL_ASSERT(eLIST_OUT_OF_MEMORY);
+		}
+
 		if(0 == m_uiNodeCount)
 		{
 			m_pFirst = m_pLast = pNewHead;
@@ -591,16 +635,18 @@ E_LIST_ERROR_TYPE LinkedList<T>::Append(Node<T>& rNewLast)
 	if((m_uiCapacity <= m_uiNodeCount) && (UNLIMITTED_LIST_SIZE != m_uiCapacity))
 	{
 		LIST_DEBUG("Error: Over capacity list");
-		return eLIST_OVER_CAPACITY;
+		return LL_ASSERT(eLIST_OVER_CAPACITY);
 	}
 
 	E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
 
     Node<T> *pNode = new Node<T>(rNewLast);
-    if (NULL_PTR == pNode)
-    {
-        return eLIST_OUT_OF_MEMORY;
-    }
+
+	if(pNode == NULL_PTR)
+	{
+		return LL_ASSERT(eLIST_OUT_OF_MEMORY);
+	}
+
 	if(0 == m_uiNodeCount)
 	{
 		m_pFirst = m_pLast = pNode;

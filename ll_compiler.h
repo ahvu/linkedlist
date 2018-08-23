@@ -5,6 +5,7 @@
 #define NULL_PTR 0 
 #endif
 
+#define UNITTEST
 template <class T> class LinkedList;
 template <class T> class Node;
 
