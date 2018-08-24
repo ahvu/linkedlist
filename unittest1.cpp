@@ -368,58 +368,58 @@ namespace LinkedListUnitTest
 		}
 	};
 
-	TEST_CLASS(Test_RemoveFirst)
-	{
-		/*
-		*	E_LIST_ERROR_TYPE RemoveFirst(void);
-		*/
-	public:
-		/*
-		*	Test Description: Test for normal case of RemoveFirst
-		*	Input: Value of node
-		*	Expected output: NA
-		*	Return: eLIST_NO_ERR
-		*/
-		TEST_METHOD(Test_RemoveFirst_1_1)
-		{
-			LinkedList<unsigned int> uiList(10);
-			unsigned int uiNodeVal;
+	//TEST_CLASS(Test_RemoveFirst)
+	//{
+	//	/*
+	//	*	E_LIST_ERROR_TYPE RemoveFirst(void);
+	//	*/
+	//public:
+	//	/*
+	//	*	Test Description: Test for normal case of RemoveFirst
+	//	*	Input: Value of node
+	//	*	Expected output: NA
+	//	*	Return: eLIST_NO_ERR
+	//	*/
+	//	TEST_METHOD(Test_RemoveFirst_1_1)
+	//	{
+	//		LinkedList<unsigned int> uiList(10);
+	//		unsigned int uiNodeVal;
 
-			Assert::IsTrue(eLIST_NO_ERR == uiList.Append(10));
-			Assert::IsTrue(eLIST_NO_ERR == uiList.RemoveFirst());
-			Assert::IsTrue(uiList.m_pFirst == uiList.m_pLast);
-			Assert::IsTrue(uiList.m_pFirst == NULL);
+	//		Assert::IsTrue(eLIST_NO_ERR == uiList.Append(10));
+	//		Assert::IsTrue(eLIST_NO_ERR == uiList.RemoveFirst());
+	//		Assert::IsTrue(uiList.m_pFirst == uiList.m_pLast);
+	//		Assert::IsTrue(uiList.m_pFirst == NULL);
 
-			Assert::IsTrue(eLIST_NO_ERR == uiList.Append(10));
-			Assert::IsTrue(eLIST_NO_ERR == uiList.Append(10));
-			Assert::IsTrue(eLIST_NO_ERR == uiList.RemoveFirst());
-			Assert::IsTrue(uiList.m_pFirst == uiList.m_pLast);
-			Assert::IsTrue(uiList.m_pFirst != NULL);
-		}
-		/*
-		*	Test Description: Test for abnormal case of RemoveFirst, Empty list
-		*	Input: Value of node
-		*	Expected output: NA
-		*	Return: eLIST_EMPTY_LIST
-		*/
-		TEST_METHOD(Test_RemoveFirst_1_2)
-		{
-			LinkedList<unsigned int> uiList(10);
-			unsigned int uiNodeVal;
-			for (int i = 0; i < 10; ++i)
-			{
-				Assert::IsTrue(eLIST_NO_ERR == uiList.Append(i));
-			}
-			Assert::IsTrue(eLIST_NO_ERR == uiList.Remove(3));
-			Assert::IsTrue(9 == uiList.GetCount());
-			Assert::IsTrue(eLIST_NO_ERR == uiList.GetValByIdx(uiNodeVal, 3));
-			Assert::IsTrue(4 == uiNodeVal);
-			Assert::IsTrue(eLIST_NO_ERR == uiList.Remove(5));
-			Assert::IsTrue(8 == uiList.GetCount());
-			Assert::IsTrue(eLIST_NO_ERR == uiList.GetValByIdx(uiNodeVal, 4));
-			Assert::IsTrue(6 == uiNodeVal);
-		}
-	};
+	//		Assert::IsTrue(eLIST_NO_ERR == uiList.Append(10));
+	//		Assert::IsTrue(eLIST_NO_ERR == uiList.Append(10));
+	//		Assert::IsTrue(eLIST_NO_ERR == uiList.RemoveFirst());
+	//		Assert::IsTrue(uiList.m_pFirst == uiList.m_pLast);
+	//		Assert::IsTrue(uiList.m_pFirst != NULL);
+	//	}
+	//	/*
+	//	*	Test Description: Test for abnormal case of RemoveFirst, Empty list
+	//	*	Input: Value of node
+	//	*	Expected output: NA
+	//	*	Return: eLIST_EMPTY_LIST
+	//	*/
+	//	TEST_METHOD(Test_RemoveFirst_1_2)
+	//	{
+	//		LinkedList<unsigned int> uiList(10);
+	//		unsigned int uiNodeVal;
+	//		for (int i = 0; i < 10; ++i)
+	//		{
+	//			Assert::IsTrue(eLIST_NO_ERR == uiList.Append(i));
+	//		}
+	//		Assert::IsTrue(eLIST_NO_ERR == uiList.Remove(3));
+	//		Assert::IsTrue(9 == uiList.GetCount());
+	//		Assert::IsTrue(eLIST_NO_ERR == uiList.GetValByIdx(uiNodeVal, 3));
+	//		Assert::IsTrue(4 == uiNodeVal);
+	//		Assert::IsTrue(eLIST_NO_ERR == uiList.Remove(5));
+	//		Assert::IsTrue(8 == uiList.GetCount());
+	//		Assert::IsTrue(eLIST_NO_ERR == uiList.GetValByIdx(uiNodeVal, 4));
+	//		Assert::IsTrue(6 == uiNodeVal);
+	//	}
+	//};
 
 	TEST_CLASS(Test_GetValByIdx)
 	{
@@ -618,97 +618,97 @@ namespace LinkedListUnitTest
 		}
 
 	};
-	// E_LIST_ERROR_TYPE Insert (Node<T>& NewNode, unsigned int uiIdx);
-	TEST_CLASS(Test_Insert_1)
-	{
-	public:
-		/*
-		 * Test_Insert_1_1
-		 * Input: Empty list, NewNode, index = 0;
-		 * Output eErr = eLIST_NO_ERR
-				  NewNode inserted as first node
-		 */
-		TEST_METHOD(Test_Insert_1_1)
-		{
-			LinkedList<unsigned int> uiList(0);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			unsigned int idx = 0;
-			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			Node<unsigned int> _Node(10);
-			eErr = uiList.Insert(_Node, idx);
-			Assert::IsTrue(eErr == eLIST_NO_ERR);
-			Assert::IsTrue(uiList.GetCount() == 1);
-			Assert::IsTrue(uiList[0] == _Node.GetVal());
-		}
+	//// E_LIST_ERROR_TYPE Insert (Node<T>& NewNode, unsigned int uiIdx);
+	//TEST_CLASS(Test_Insert_1)
+	//{
+	//public:
+	//	/*
+	//	 * Test_Insert_1_1
+	//	 * Input: Empty list, NewNode, index = 0;
+	//	 * Output eErr = eLIST_NO_ERR
+	//			  NewNode inserted as first node
+	//	 */
+	//	TEST_METHOD(Test_Insert_1_1)
+	//	{
+	//		LinkedList<unsigned int> uiList(0);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		unsigned int idx = 0;
+	//		E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//		Node<unsigned int> _Node(10);
+	//		eErr = uiList.Insert(_Node, idx);
+	//		Assert::IsTrue(eErr == eLIST_NO_ERR);
+	//		Assert::IsTrue(uiList.GetCount() == 1);
+	//		Assert::IsTrue(uiList[0] == _Node.GetVal());
+	//	}
 
-		/*
-		 * Test_Insert_1_2
-		 * Input: Empty list, NewNode, index = last index, 1;
-		 * Output eErr = eLIST_NO_ERR
-				  NewNodes inserted
-		 */
-		TEST_METHOD(Test_Insert_1_2)
-		{
-			LinkedList<unsigned int> uiList(0);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			unsigned int idx = 0;
-			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			Node<unsigned int> _Node(10);
-			eErr = uiList.Insert(_Node, idx);
-			Assert::IsTrue(eErr == eLIST_NO_ERR);
-			Assert::IsTrue(uiList.GetCount() == 1);
-			Assert::IsTrue(uiList[0] == _Node.GetVal());
+	//	/*
+	//	 * Test_Insert_1_2
+	//	 * Input: Empty list, NewNode, index = last index, 1;
+	//	 * Output eErr = eLIST_NO_ERR
+	//			  NewNodes inserted
+	//	 */
+	//	TEST_METHOD(Test_Insert_1_2)
+	//	{
+	//		LinkedList<unsigned int> uiList(0);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		unsigned int idx = 0;
+	//		E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//		Node<unsigned int> _Node(10);
+	//		eErr = uiList.Insert(_Node, idx);
+	//		Assert::IsTrue(eErr == eLIST_NO_ERR);
+	//		Assert::IsTrue(uiList.GetCount() == 1);
+	//		Assert::IsTrue(uiList[0] == _Node.GetVal());
 
-			eErr = uiList.Insert(_Node, uiList.GetCount() - 1);
-			Assert::IsTrue(eErr == eLIST_NO_ERR);
-			Assert::IsTrue(uiList.GetCount() == 2);
-			Assert::IsTrue(uiList[1] == _Node.GetVal());
+	//		eErr = uiList.Insert(_Node, uiList.GetCount() - 1);
+	//		Assert::IsTrue(eErr == eLIST_NO_ERR);
+	//		Assert::IsTrue(uiList.GetCount() == 2);
+	//		Assert::IsTrue(uiList[1] == _Node.GetVal());
 
-			eErr = uiList.Insert(_Node, 1);
-			Assert::IsTrue(eErr == eLIST_NO_ERR);
-			Assert::IsTrue(uiList.GetCount() == 3);
-			Assert::IsTrue(uiList[1] == _Node.GetVal());
-		}
+	//		eErr = uiList.Insert(_Node, 1);
+	//		Assert::IsTrue(eErr == eLIST_NO_ERR);
+	//		Assert::IsTrue(uiList.GetCount() == 3);
+	//		Assert::IsTrue(uiList[1] == _Node.GetVal());
+	//	}
 
-		/*
-		 * Test_Insert_1_3
-		 * Input: Empty list, NewNode, index = > Count
-		 * Output eErr = eLIST_INVALID_INDEX
-		 */
-		TEST_METHOD(Test_Insert_1_3)
-		{
-			LinkedList<unsigned int> uiList(0);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			unsigned int idx = 5;
-			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			Node<unsigned int> _Node(10);
-			eErr = uiList.Insert(_Node, idx);
-			Assert::IsTrue(eErr == eLIST_INVALID_INDEX);
-			Assert::IsTrue(uiList.GetCount() == 0);
-		}
+	//	/*
+	//	 * Test_Insert_1_3
+	//	 * Input: Empty list, NewNode, index = > Count
+	//	 * Output eErr = eLIST_INVALID_INDEX
+	//	 */
+	//	TEST_METHOD(Test_Insert_1_3)
+	//	{
+	//		LinkedList<unsigned int> uiList(0);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		unsigned int idx = 5;
+	//		E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//		Node<unsigned int> _Node(10);
+	//		eErr = uiList.Insert(_Node, idx);
+	//		Assert::IsTrue(eErr == eLIST_INVALID_INDEX);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//	}
 
-		/*
-		 * Test_Insert_1_4
-		 * Input: list {0,1,2,3} with capacity = 4 , NewNode, index = 0
-		 * Output eErr = eLIST_OVER_CAPACITY
-		 *				 no node inserted
-		 */
-		TEST_METHOD(Test_Insert_1_4)
-		{
-			LinkedList<unsigned int> uiList(4);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			for (unsigned int i = 0; i < 4; i++)
-			{
-				uiList.Insert(i, 0);
-			}
-			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			Node<unsigned int> _Node(10);
-			eErr = uiList.Insert(_Node, 0);
+	//	/*
+	//	 * Test_Insert_1_4
+	//	 * Input: list {0,1,2,3} with capacity = 4 , NewNode, index = 0
+	//	 * Output eErr = eLIST_OVER_CAPACITY
+	//	 *				 no node inserted
+	//	 */
+	//	TEST_METHOD(Test_Insert_1_4)
+	//	{
+	//		LinkedList<unsigned int> uiList(4);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		for (unsigned int i = 0; i < 4; i++)
+	//		{
+	//			uiList.Insert(i, 0);
+	//		}
+	//		E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//		Node<unsigned int> _Node(10);
+	//		eErr = uiList.Insert(_Node, 0);
 
-			Assert::IsTrue(eErr == eLIST_OVER_CAPACITY);
-			Assert::IsTrue(uiList.GetCount() == 4);
-		}
-	};
+	//		Assert::IsTrue(eErr == eLIST_OVER_CAPACITY);
+	//		Assert::IsTrue(uiList.GetCount() == 4);
+	//	}
+	//};
 	// E_LIST_ERROR_TYPE RemoveLast(void);
 	TEST_CLASS(Test_RemoveLast)
 	{
@@ -911,194 +911,194 @@ namespace LinkedListUnitTest
 		}
 
 	};
-	// Node<T>* GetNodeByIdx(unsigned int uiIdx);
-	TEST_CLASS(Test_GetNodeByIdx)
-	{
-	public:
-		/*
-		 * Test_GetNodeByIdx_1_1
-		 * Input: Invalid index, List { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
-		 * Expected output: NULL
-		 */
-		TEST_METHOD(Test_GetNodeByIdx_1_1)
-		{
-			// Step 1: Create a list with 10 elements
-			LinkedList<unsigned int> uiList(10);
-			for (unsigned int i = 0; i < 10; i++)
-			{
-				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-				Node<unsigned int> _Node(i);
-				eErr = uiList.Append(_Node);
-				Assert::IsTrue(eErr == eLIST_NO_ERR);
-			}
-			// Step 2: Get node by index
-			Assert::IsTrue(uiList.GetNodeByIdx(12) == NULL);
-		}
-		/*
-		 * Test_GetNodeByIdx_1_2
-		 * Input: valid index, List { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
-		 * Expected output: node with right value
-		 */
-		TEST_METHOD(Test_GetNodeByIdx_1_2)
-		{
-			// Step 1: Create a list with 10 elements
-			LinkedList<unsigned int> uiList(10);
-			for (unsigned int i = 0; i < 10; i++)
-			{
-				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-				Node<unsigned int> _Node(i);
-				eErr = uiList.Append(_Node);
-				Assert::IsTrue(eErr == eLIST_NO_ERR);
-			}
-			// Step 2: Get node by index
-			Assert::IsTrue(uiList.GetNodeByIdx(12) == NULL);
-			Assert::IsTrue(uiList.GetNodeByIdx(0)->GetVal() == 0);
-		}
-	};
-	// E_LIST_ERROR_TYPE AddFirst (Node<T>& NewLast);
-	TEST_CLASS(Test_AddFirst_1)
-	{
-	public:
-		/*
-		 *  Test_AddFirst_1_1
-		 *	Input: Node, empty list
-		 *  Expected output: eErr = eLIST_NO_ERR,
-							 m_pFirst == m_pLast,
-							 m_pFist->Val == Node.val
-							 list.m_uiNodeCount increases
-		 */
-		TEST_METHOD(Test_AddFirst_1_1)
-		{
-			LinkedList<unsigned int> uiList(1);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			Node<unsigned int> node1(10);
-			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			eErr = uiList.AddFirst(node1);
-			Assert::IsTrue(eLIST_NO_ERR == eErr);
+	//// Node<T>* GetNodeByIdx(unsigned int uiIdx);
+	//TEST_CLASS(Test_GetNodeByIdx)
+	//{
+	//public:
+	//	/*
+	//	 * Test_GetNodeByIdx_1_1
+	//	 * Input: Invalid index, List { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+	//	 * Expected output: NULL
+	//	 */
+	//	TEST_METHOD(Test_GetNodeByIdx_1_1)
+	//	{
+	//		// Step 1: Create a list with 10 elements
+	//		LinkedList<unsigned int> uiList(10);
+	//		for (unsigned int i = 0; i < 10; i++)
+	//		{
+	//			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//			Node<unsigned int> _Node(i);
+	//			eErr = uiList.Append(_Node);
+	//			Assert::IsTrue(eErr == eLIST_NO_ERR);
+	//		}
+	//		// Step 2: Get node by index
+	//		Assert::IsTrue(uiList.GetNodeByIdx(12) == NULL);
+	//	}
+	//	/*
+	//	 * Test_GetNodeByIdx_1_2
+	//	 * Input: valid index, List { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+	//	 * Expected output: node with right value
+	//	 */
+	//	TEST_METHOD(Test_GetNodeByIdx_1_2)
+	//	{
+	//		// Step 1: Create a list with 10 elements
+	//		LinkedList<unsigned int> uiList(10);
+	//		for (unsigned int i = 0; i < 10; i++)
+	//		{
+	//			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//			Node<unsigned int> _Node(i);
+	//			eErr = uiList.Append(_Node);
+	//			Assert::IsTrue(eErr == eLIST_NO_ERR);
+	//		}
+	//		// Step 2: Get node by index
+	//		Assert::IsTrue(uiList.GetNodeByIdx(12) == NULL);
+	//		Assert::IsTrue(uiList.GetNodeByIdx(0)->GetVal() == 0);
+	//	}
+	//};
+	//// E_LIST_ERROR_TYPE AddFirst (Node<T>& NewLast);
+	//TEST_CLASS(Test_AddFirst_1)
+	//{
+	//public:
+	//	/*
+	//	 *  Test_AddFirst_1_1
+	//	 *	Input: Node, empty list
+	//	 *  Expected output: eErr = eLIST_NO_ERR,
+	//						 m_pFirst == m_pLast,
+	//						 m_pFist->Val == Node.val
+	//						 list.m_uiNodeCount increases
+	//	 */
+	//	TEST_METHOD(Test_AddFirst_1_1)
+	//	{
+	//		LinkedList<unsigned int> uiList(1);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		Node<unsigned int> node1(10);
+	//		E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//		eErr = uiList.AddFirst(node1);
+	//		Assert::IsTrue(eLIST_NO_ERR == eErr);
 
-			Assert::IsTrue(uiList.m_pFirst == uiList.m_pLast);
-			Assert::IsTrue(uiList[0] == node1.GetVal());
-			Assert::IsTrue(uiList.GetCount() == 1);
-		}
+	//		Assert::IsTrue(uiList.m_pFirst == uiList.m_pLast);
+	//		Assert::IsTrue(uiList[0] == node1.GetVal());
+	//		Assert::IsTrue(uiList.GetCount() == 1);
+	//	}
 
-		/*
-		 *  Test_AddFirst_1_2
-		 *	Input: Node, over capacity list
-		 *  Expected output: eErr = eLIST_OVER_CAPACITY
-							 list stays the same
-		 */
-		TEST_METHOD(Test_AddFirst_1_2)
-		{
-			LinkedList<unsigned int> uiList(1);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			Node<unsigned int> node1(10);
-			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			eErr = uiList.AddFirst(node1);
-			Assert::IsTrue(eLIST_NO_ERR == eErr);
+	//	/*
+	//	 *  Test_AddFirst_1_2
+	//	 *	Input: Node, over capacity list
+	//	 *  Expected output: eErr = eLIST_OVER_CAPACITY
+	//						 list stays the same
+	//	 */
+	//	TEST_METHOD(Test_AddFirst_1_2)
+	//	{
+	//		LinkedList<unsigned int> uiList(1);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		Node<unsigned int> node1(10);
+	//		E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//		eErr = uiList.AddFirst(node1);
+	//		Assert::IsTrue(eLIST_NO_ERR == eErr);
 
-			Node<unsigned int> node2(20);
-			eErr = uiList.AddFirst(node2);
-			Assert::IsTrue(eLIST_OVER_CAPACITY == eErr);
-			Assert::IsTrue(uiList.GetCount() == 1);
-		}
+	//		Node<unsigned int> node2(20);
+	//		eErr = uiList.AddFirst(node2);
+	//		Assert::IsTrue(eLIST_OVER_CAPACITY == eErr);
+	//		Assert::IsTrue(uiList.GetCount() == 1);
+	//	}
 
-		/*
-		 *  Test_AddFirst_1_3
-		 *	Input: Nodes, unlimited size list
-		 *  Expected output: eErr = eLIST_NO_ERR
-							 list changes as Adding First
-		 */
-		TEST_METHOD(Test_AddFirst_1_3)
-		{
-			LinkedList<unsigned int> uiList(0);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			Node<unsigned int> node1(10);
-			Node<unsigned int> node2(20);
-			for (int i = 0; i < 30; i++)
-			{
-				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-				eErr = uiList.AddFirst((i % 2) ? node1 : node2);
-				Assert::IsTrue(eLIST_NO_ERR == eErr);
-			}
+	//	/*
+	//	 *  Test_AddFirst_1_3
+	//	 *	Input: Nodes, unlimited size list
+	//	 *  Expected output: eErr = eLIST_NO_ERR
+	//						 list changes as Adding First
+	//	 */
+	//	TEST_METHOD(Test_AddFirst_1_3)
+	//	{
+	//		LinkedList<unsigned int> uiList(0);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		Node<unsigned int> node1(10);
+	//		Node<unsigned int> node2(20);
+	//		for (int i = 0; i < 30; i++)
+	//		{
+	//			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//			eErr = uiList.AddFirst((i % 2) ? node1 : node2);
+	//			Assert::IsTrue(eLIST_NO_ERR == eErr);
+	//		}
 
-			Assert::IsTrue(uiList.GetCount() == 30);
-			Assert::IsTrue(uiList[0] == 10);
-			Assert::IsTrue(uiList[29] == 20);
-		}
+	//		Assert::IsTrue(uiList.GetCount() == 30);
+	//		Assert::IsTrue(uiList[0] == 10);
+	//		Assert::IsTrue(uiList[29] == 20);
+	//	}
 
-	};
-	// E_LIST_ERROR_TYPE Append (Node<T>& NewLast);
-	TEST_CLASS(Test_Append_SingleNode)
-	{
-	public:
-		/*
-		 *  Test_Append_SingleNode_1
-		 *	Input: Node, empty list
-		 *  Expected output: eErr = eLIST_NO_ERR,
-							 m_pFirst == m_pLast,
-							 m_pFist->Val == Node.val
-							 list.m_uiNodeCount increases
-		 */
-		TEST_METHOD(Test_Append_SingleNode_1)
-		{
-			LinkedList<unsigned int> uiList(1);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			Node<unsigned int> node1(10);
-			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			eErr = uiList.Append(node1);
-			Assert::IsTrue(eLIST_NO_ERR == eErr);
+	//};
+	//// E_LIST_ERROR_TYPE Append (Node<T>& NewLast);
+	//TEST_CLASS(Test_Append_SingleNode)
+	//{
+	//public:
+	//	/*
+	//	 *  Test_Append_SingleNode_1
+	//	 *	Input: Node, empty list
+	//	 *  Expected output: eErr = eLIST_NO_ERR,
+	//						 m_pFirst == m_pLast,
+	//						 m_pFist->Val == Node.val
+	//						 list.m_uiNodeCount increases
+	//	 */
+	//	TEST_METHOD(Test_Append_SingleNode_1)
+	//	{
+	//		LinkedList<unsigned int> uiList(1);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		Node<unsigned int> node1(10);
+	//		E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//		eErr = uiList.Append(node1);
+	//		Assert::IsTrue(eLIST_NO_ERR == eErr);
 
-			Assert::IsTrue(uiList.m_pFirst == uiList.m_pLast);
-			Assert::IsTrue(uiList[0] == node1.GetVal());
-			Assert::IsTrue(uiList.GetCount() == 1);
-		}
+	//		Assert::IsTrue(uiList.m_pFirst == uiList.m_pLast);
+	//		Assert::IsTrue(uiList[0] == node1.GetVal());
+	//		Assert::IsTrue(uiList.GetCount() == 1);
+	//	}
 
-		/*
-		 *  Test_Append_SingleNode_2
-		 *	Input: Node, over capacity list
-		 *  Expected output: eErr = eLIST_OVER_CAPACITY
-							 list stays the same
-		 */
-		TEST_METHOD(Test_Append_SingleNode_2)
-		{
-			LinkedList<unsigned int> uiList(1);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			Node<unsigned int> node1(10);
-			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-			eErr = uiList.Append(node1);
-			Assert::IsTrue(eLIST_NO_ERR == eErr);
+	//	/*
+	//	 *  Test_Append_SingleNode_2
+	//	 *	Input: Node, over capacity list
+	//	 *  Expected output: eErr = eLIST_OVER_CAPACITY
+	//						 list stays the same
+	//	 */
+	//	TEST_METHOD(Test_Append_SingleNode_2)
+	//	{
+	//		LinkedList<unsigned int> uiList(1);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		Node<unsigned int> node1(10);
+	//		E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//		eErr = uiList.Append(node1);
+	//		Assert::IsTrue(eLIST_NO_ERR == eErr);
 
-			Node<unsigned int> node2(20);
-			eErr = uiList.Append(node2);
-			Assert::IsTrue(eLIST_OVER_CAPACITY == eErr);
-			Assert::IsTrue(uiList.GetCount() == 1);
-		}
+	//		Node<unsigned int> node2(20);
+	//		eErr = uiList.Append(node2);
+	//		Assert::IsTrue(eLIST_OVER_CAPACITY == eErr);
+	//		Assert::IsTrue(uiList.GetCount() == 1);
+	//	}
 
-		/*
-		 *  Test_Append_SingleNode_3
-		 *	Input: Nodes, unlimited size list
-		 *  Expected output: eErr = eLIST_NO_ERR
-							 list changes as appending
-		 */
-		TEST_METHOD(Test_Append_SingleNode_3)
-		{
-			LinkedList<unsigned int> uiList(0);
-			Assert::IsTrue(uiList.GetCount() == 0);
-			Node<unsigned int> node1(10);
-			Node<unsigned int> node2(20);
-			for (int i = 0; i < 30; i++)
-			{
-				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-				eErr = uiList.Append((i % 2) ? node1 : node2);
-				Assert::IsTrue(eLIST_NO_ERR == eErr);
-			}
+	//	/*
+	//	 *  Test_Append_SingleNode_3
+	//	 *	Input: Nodes, unlimited size list
+	//	 *  Expected output: eErr = eLIST_NO_ERR
+	//						 list changes as appending
+	//	 */
+	//	TEST_METHOD(Test_Append_SingleNode_3)
+	//	{
+	//		LinkedList<unsigned int> uiList(0);
+	//		Assert::IsTrue(uiList.GetCount() == 0);
+	//		Node<unsigned int> node1(10);
+	//		Node<unsigned int> node2(20);
+	//		for (int i = 0; i < 30; i++)
+	//		{
+	//			E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
+	//			eErr = uiList.Append((i % 2) ? node1 : node2);
+	//			Assert::IsTrue(eLIST_NO_ERR == eErr);
+	//		}
 
-			Assert::IsTrue(uiList.GetCount() == 30);
-			Assert::IsTrue(uiList[0] == 20);
-			Assert::IsTrue(uiList[29] == 10);
-		}
+	//		Assert::IsTrue(uiList.GetCount() == 30);
+	//		Assert::IsTrue(uiList[0] == 20);
+	//		Assert::IsTrue(uiList[29] == 10);
+	//	}
 
-	};
+	//};
 
     // E_LIST_ERROR_TYPE Append (LinkedList<T>& InList);
 	TEST_CLASS(Test_Append_List)
@@ -1148,12 +1148,10 @@ namespace LinkedListUnitTest
 			LinkedList<unsigned int> uiList(0);
 			LinkedList<unsigned int> uiList_toAppend(10);
 			Assert::IsTrue(uiList.GetCount() == 0);
-			Node<unsigned int> node1(10);
-			Node<unsigned int> node2(20);
 			for (int i = 0; i < 30; i++)
 			{
 				E_LIST_ERROR_TYPE eErr = eLIST_NO_ERR;
-				eErr = uiList.Append((i % 2) ? node1 : node2);
+				eErr = uiList.Append((i % 2) ? 10 : 20);
 				Assert::IsTrue(eLIST_NO_ERR == eErr);
 			}
 			Assert::IsTrue(uiList.GetCount() == 30);
@@ -1168,18 +1166,18 @@ namespace LinkedListUnitTest
 	{
 	public:
 
-		TEST_METHOD(Test_NodeCtor)
-		{
-			Node<unsigned int> a(10);
-			Assert::IsTrue(a.GetVal() == 10);
-		}
+		//TEST_METHOD(Test_NodeCtor)
+		//{
+		//	Node<unsigned int> a(10);
+		//	Assert::IsTrue(a.GetVal() == 10);
+		//}
 
-		TEST_METHOD(Test_NodeSetVal)
-		{
-			Node<unsigned int> a(10);
-			a.SetVal(5);
-			Assert::IsTrue(a.GetVal() == 5);
-		}
+		//TEST_METHOD(Test_NodeSetVal)
+		//{
+		//	Node<unsigned int> a(10);
+		//	a.SetVal(5);
+		//	Assert::IsTrue(a.GetVal() == 5);
+		//}
 
 		TEST_METHOD(Test_ListCtor)
 		{
